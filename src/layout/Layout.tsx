@@ -7,10 +7,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <main className="w-full block h-full">
-        <Navbar comp={<SidebarTrigger />} />
-        <div className="bg-red-400 h-[calc(100svh-theme(spacing.4))] ">
-          {children}
-        </div>
+        <Navbar comp={<SidebarTrigger className="text-2xl" size={"lg"} />} />
+        <div className="h-full p-5 bg-red-400">{children}</div>
       </main>
     </SidebarProvider>
   );
