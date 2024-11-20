@@ -12,11 +12,11 @@ export function EmailCanvas() {
   });
 
   return (
-    <div className="flex-1 p-8 bg-gray-50">
+    <div className="flex-1 p-8 bg-transparent">
       <div className="max-w-2xl mx-auto">
         <div
           ref={setNodeRef}
-          className="bg-white min-h-[800px] rounded-lg shadow-md p-8"
+          className="bg-transparent border min-h-[800px] rounded-lg shadow-md p-8"
           onClick={() => setSelectedComponent(null)}
         >
           <ScrollArea className="h-full">
