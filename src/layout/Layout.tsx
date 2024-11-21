@@ -1,5 +1,7 @@
+"use client";
 import Navbar from "@/components/Navbar/Navbar";
-import AppSidebar from "@/components/ui/app-sidebar";
+import { AppSidebar } from "@/components/ui/app-sidebar";
+
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Navbar
           comp={<SidebarTrigger className="text-2xl p-5" size={"lg"} />}
         />
-        <div className="h-full p-5 bg-red-400">{children}</div>
+        <div className="p-4">{children}</div>
       </main>
     </SidebarProvider>
   );

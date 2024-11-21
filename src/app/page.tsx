@@ -1,11 +1,5 @@
-import EmailBuilder from "@/components/EmailComponets/EmailBuilder";
-
 const Home = () => {
-  return (
-    <div>
-      <EmailBuilder />
-    </div>
-  );
+  return <div>hello</div>;
 };
 
 export default Home;

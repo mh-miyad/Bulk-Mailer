@@ -19,6 +19,14 @@ import { Bell, Globe, Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
 import { ReactElement } from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../ui/breadcrumb";
 
 const languages = [
   { code: "en", name: "English" },
@@ -38,8 +46,25 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
   return (
     <>
       <nav className="bg-background border-b sticky top-0 w-full z-50">
-        <div className="flex items-center  justify-between h-16 px-10">
-          <div className="">{comp}</div>
+        <div className="flex items-center  justify-between h-16 px-5">
+          <div className="flex items-center gap-10">
+            <div className="">{comp}</div>
+            <div>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">
+                      Building Your Application
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </div>
           <div className="w-full max-w-xs">
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="relative">
