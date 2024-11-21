@@ -27,6 +27,7 @@ import {
   Send,
   TestTube,
 } from "lucide-react"; // Lucide Icons
+import { usePathname } from "next/navigation";
 import {
   FaDraftingCompass,
   FaEnvelope,
@@ -75,7 +76,7 @@ const data = {
         },
         {
           title: "Templates",
-          url: "#",
+          url: "/Template",
           icon: FileText,
         },
         {
@@ -131,6 +132,8 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = usePathname();
+
   return (
     <Sidebar {...props} className="bg-white dark:bg-slate-950 dark:text-white">
       <SidebarHeader className="bg-white dark:bg-slate-950">
@@ -157,7 +160,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                   {item.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton isActive={item.url === "/"}>
+                      <SidebarMenuButton isActive={item.url === router}>
                         <item.icon className="mr-2 h-7 w-7" />
 
                         <Link href={item.url}>{item.title}</Link>
