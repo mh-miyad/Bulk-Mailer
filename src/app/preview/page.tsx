@@ -7,9 +7,12 @@ import { Body, Container, Head, Html, Preview } from "@react-email/components";
 import { render } from "@react-email/render";
 import { ArrowLeft, Copy, Eye } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function PreviewPage() {
   const { components } = useEmailStore();
+  const [htmlOfEmail, setHtmlOfEmail] = useState("");
   const handleCopyHtml = async () => {
     const emailHtml = await render(
       <Html>
@@ -24,7 +27,21 @@ export default function PreviewPage() {
         </Body>
       </Html>
     );
+    setHtmlOfEmail(emailHtml);
     navigator.clipboard.writeText(emailHtml);
+    toast("Html copied to clipboard", {
+      description: "Copied to clipboard",
+      position: "bottom-right",
+      action: {
+        label: "Undo",
+        onClick: () => {
+          console.log(htmlOfEmail);
+          navigator.clipboard.writeText("");
+          setHtmlOfEmail("");
+          toast.dismiss();
+        },
+      },
+    });
   };
 
   return (

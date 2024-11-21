@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import Layout from "@/layout/Layout";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -31,6 +32,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Layout>{children}</Layout>
+        <Toaster />
       </body>
     </html>
   );
