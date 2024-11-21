@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,16 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
-import { Bell, Globe, Moon, Search, Sun } from "lucide-react";
+import { Bell, Globe, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import * as React from "react";
 import { ReactElement } from "react";
 import {
   Breadcrumb,
@@ -42,7 +39,7 @@ const notifications = [
 
 const Navbar = ({ comp }: { comp: ReactElement }) => {
   const { theme, setTheme } = useTheme();
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
   return (
     <>
       <nav className="bg-background border-b sticky top-0 w-full z-50">
@@ -65,14 +62,14 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
               </Breadcrumb>
             </div>
           </div>
-          <div className="w-full max-w-xs">
+          {/* <div className="w-full max-w-xs">
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input placeholder="Search..." className="pl-8" />
               </div>
             </form>
-          </div>
+          </div> */}
           <div className="flex items-center space-x-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -130,11 +127,11 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
               <span className="sr-only">Toggle theme</span>
             </Switch>
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                  <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -152,7 +149,7 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
                   </DropdownMenuItem>
                 )}
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </div>
         </div>
       </nav>

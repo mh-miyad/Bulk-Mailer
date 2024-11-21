@@ -1,3 +1,4 @@
+"use client";
 import {
   Sidebar,
   SidebarContent,
@@ -16,131 +17,113 @@ import { ScrollArea } from "./scroll-area";
 import { SearchForm } from "./search-form";
 import { VersionSwitcher } from "./version-switcher";
 
+// Import the icons you need
+import {
+  Code,
+  FileText,
+  Image,
+  Layers,
+  LayoutGrid,
+  Send,
+  TestTube,
+} from "lucide-react"; // Lucide Icons
+import {
+  FaDraftingCompass,
+  FaEnvelope,
+  FaHome,
+  FaUserFriends,
+} from "react-icons/fa"; // React Icons
+import { SidebarOptInForm } from "./sidebar-comp-opt";
+import { SideBarUser } from "./sidebar-user";
+
+// Menu Data
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
       title: "Getting Started",
       url: "#",
+      icon: FaHome, // Reference the icon's name as a string
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Dashboard",
+          url: "/",
+          icon: FaHome,
+          isActive: true,
         },
         {
-          title: "Project Structure",
+          title: "Projects And Teams",
           url: "#",
+          icon: FaUserFriends,
         },
       ],
     },
     {
-      title: "Building Your Application",
+      title: "Building Your Email",
       url: "#",
+      icon: FaEnvelope,
       items: [
         {
-          title: "Routing",
+          title: "Components",
           url: "#",
+          icon: LayoutGrid,
         },
         {
-          title: "Data Fetching",
+          title: "Layouts",
           url: "#",
-          isActive: true,
+          icon: Layers,
         },
         {
-          title: "Rendering",
+          title: "Templates",
           url: "#",
+          icon: FileText,
         },
         {
-          title: "Caching",
-          url: "#",
+          title: "Email Builder",
+          url: "/EmailBuilder",
+          icon: FaDraftingCompass,
         },
         {
-          title: "Styling",
+          title: "Drafts",
           url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
+          icon: Code,
         },
         {
           title: "Testing",
           url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
+          icon: TestTube,
         },
         {
           title: "Examples",
           url: "#",
+          icon: FileText,
         },
       ],
     },
     {
       title: "API Reference",
       url: "#",
+      icon: FaEnvelope,
       items: [
         {
-          title: "Components",
+          title: "Resend API",
           url: "#",
+          icon: Send,
         },
         {
-          title: "File Conventions",
+          title: "Nodemailer API",
           url: "#",
+          icon: FaEnvelope,
         },
         {
-          title: "Functions",
+          title: "SendGrid API",
           url: "#",
+          icon: Send,
         },
         {
-          title: "next.config.js Options",
+          title: "Image Hosting API",
           url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
+          icon: Image,
         },
       ],
     },
@@ -149,25 +132,34 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props} className="">
-      <SidebarHeader className="bg-slate-100 dark:bg-slate-950">
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
+    <Sidebar {...props} className="bg-white dark:bg-slate-950 dark:text-white">
+      <SidebarHeader className="bg-white dark:bg-slate-950">
+        <SideBarUser
+          user={{
+            name: "John Doe",
+            email: "G3wL6@example.com",
+            avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+          }}
         />
-        <SearchForm />
+        <SearchForm className="my-4" />
       </SidebarHeader>
       <ScrollArea>
-        <SidebarContent className="bg-slate-100 dark:bg-slate-950">
+        <SidebarContent className="bg-white dark:bg-slate-950">
           {/* We create a SidebarGroup for each parent. */}
           {data.navMain.map((item) => (
-            <SidebarGroup key={item.title}>
-              <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-              <SidebarGroupContent>
+            <SidebarGroup key={item.title} className="mb-2">
+              <SidebarGroupLabel>
+                {" "}
+                <item.icon className="mr-2 h-3 w-3" />
+                {item.title}
+              </SidebarGroupLabel>
+              <SidebarGroupContent className="pl-4 my-3">
                 <SidebarMenu>
                   {item.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild isActive={item.isActive}>
+                      <SidebarMenuButton isActive={item.url === "/"}>
+                        <item.icon className="mr-2 h-7 w-7" />
+
                         <Link href={item.url}>{item.title}</Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -176,6 +168,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </SidebarGroupContent>
             </SidebarGroup>
           ))}
+
+          <div className="p-3">
+            <SidebarOptInForm />
+            <VersionSwitcher
+              versions={data.versions}
+              defaultVersion={data.versions[0]}
+            />
+          </div>
         </SidebarContent>
         <SidebarRail />
       </ScrollArea>
