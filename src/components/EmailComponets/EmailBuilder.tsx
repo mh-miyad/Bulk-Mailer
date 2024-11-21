@@ -1,8 +1,11 @@
 "use client";
 
 import { useEmailStore } from "@/Store/emailStore";
+import { ComponentType } from "@/Type/Types";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
-import { Redo2, Undo2 } from "lucide-react";
+
+import { Eye, Redo2, Undo2 } from "lucide-react";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { ComponentPanel } from "./Componets-Pannel";
 import { EmailCanvas } from "./EmailCanvas";
@@ -15,7 +18,7 @@ export default function EmailBuilder() {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      addComponent({
+      const newComponent: ComponentType = {
         type: active.id as string,
         props: {
           style: {
@@ -27,9 +30,11 @@ export default function EmailBuilder() {
             textAlign: "left",
           },
         },
-      });
+      };
+      addComponent(newComponent);
     }
   };
+
   return (
     <div className="flex flex-col h-screen">
       <div className="border-b p-4 flex items-center justify-between">
@@ -41,6 +46,12 @@ export default function EmailBuilder() {
           <Button variant="outline" size="icon" onClick={redo}>
             <Redo2 className="h-4 w-4" />
           </Button>
+          <Link href="/preview">
+            <Button className="gap-2">
+              <Eye className="h-4 w-4" />
+              Preview
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="flex flex-1">

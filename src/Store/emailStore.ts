@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { ComponentType, HistoryState } from "@/Type/Types";
+import { ComponentProps, ComponentType, HistoryState } from "@/Type/Types";
 import { create } from "zustand";
 
 interface EmailStore {
@@ -17,6 +17,17 @@ interface EmailStore {
   deleteComponent: (index: number) => void;
 }
 
+const createDefaultProps = (): ComponentProps => ({
+  style: {
+    color: "#000000",
+    backgroundColor: "#ffffff",
+    fontSize: "16px",
+    padding: "16px",
+    margin: "0px",
+    textAlign: "left",
+  },
+});
+
 export const useEmailStore = create<EmailStore>((set, get) => ({
   components: [],
   selectedComponent: null,
@@ -25,7 +36,14 @@ export const useEmailStore = create<EmailStore>((set, get) => ({
 
   addComponent: (component) =>
     set((state) => {
-      const newComponents = [...state.components, component];
+      const newComponent = {
+        ...component,
+        props: {
+          ...createDefaultProps(),
+          ...component.props,
+        },
+      };
+      const newComponents = [...state.components, newComponent];
       const newHistory = state.history.slice(0, state.currentHistoryIndex + 1);
       return {
         components: newComponents,
