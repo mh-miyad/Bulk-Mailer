@@ -1,5 +1,6 @@
 "use client";
-import { CampaignsTable } from "@/components/EmailComponets/CampaignsTable";
+
+import CampaignsTable from "@/components/EmailComponets/CampaignsTable";
 import { ContactsTable } from "@/components/EmailComponets/ContactsTable";
 import EmailCampaignChart from "@/components/EmailComponets/EmailCampaignChart";
 import EmailStatChart from "@/components/EmailComponets/EmailStartChart";
