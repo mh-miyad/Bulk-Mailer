@@ -1,6 +1,7 @@
 "use client";
 import { CampaignsTable } from "@/components/EmailComponets/CampaignsTable";
 import { ContactsTable } from "@/components/EmailComponets/ContactsTable";
+import EmailCampaignChart from "@/components/EmailComponets/EmailCampaignChart";
 import EmailStatChart from "@/components/EmailComponets/EmailStartChart";
 
 import EngagementRateChart from "@/components/EmailComponets/EngagementRateChart";
@@ -62,8 +63,6 @@ const Home = () => {
         <div className="grid gap-4 md:grid-cols-2 mb-8">
           <EmailStatChart />
           <EngagementRateChart />
-          <EmailStatChart />
-          <EngagementRateChart />
         </div>
 
         <div className="space-y-8">
@@ -75,7 +74,9 @@ const Home = () => {
               <ContactsTable />
             </CardContent>
           </Card>
-
+          <div>
+            <EmailCampaignChart />
+          </div>
           <Card>
             <CardHeader>
               <CardTitle>Recent Campaigns</CardTitle>
