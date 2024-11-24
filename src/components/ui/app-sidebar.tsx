@@ -18,6 +18,7 @@ import { SearchForm } from "./search-form";
 import { VersionSwitcher } from "./version-switcher";
 
 // Import the icons you need
+import useStore from "@/Store/Store";
 import {
   Code,
   FileText,
@@ -133,7 +134,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = usePathname();
-
+  const { setBreadcrumbs } = useStore();
   return (
     <Sidebar {...props} className="bg-white dark:bg-slate-950 dark:text-white">
       <SidebarHeader className="bg-white dark:bg-slate-950">
@@ -163,7 +164,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       <SidebarMenuButton isActive={item.url === router}>
                         <item.icon className="mr-2 h-7 w-7" />
 
-                        <Link href={item.url}>{item.title}</Link>
+                        <Link
+                          href={item.url}
+                          onClick={() => setBreadcrumbs(item.title)}
+                        >
+                          {item.title}
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}

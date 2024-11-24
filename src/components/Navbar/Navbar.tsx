@@ -13,6 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import useStore from "@/Store/Store";
 import { Bell, Globe, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ReactElement } from "react";
@@ -39,7 +40,7 @@ const notifications = [
 
 const Navbar = ({ comp }: { comp: ReactElement }) => {
   const { theme, setTheme } = useTheme();
-
+  const { breadcrumbs } = useStore();
   return (
     <>
       <nav className="bg-background border-b sticky top-0 w-full z-50">
@@ -56,7 +57,7 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                    <BreadcrumbPage>{breadcrumbs}</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
