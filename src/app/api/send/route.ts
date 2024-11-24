@@ -1,24 +1,27 @@
+import MailSenderProvider from "@/lib/nodemailer.init";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+// import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
-  const { email, subject, html } = await request.json();
+  const { data, htmlOfEmail } = await request.json();
+  const { to, email, subject } = await data;
   try {
-    const response = await resend.emails.send({
-      from: `${email}`,
-      to: "mhmiyad6565@gmail.com",
+    const response = await MailSenderProvider.sendMail({
+      from: email,
+      to: to,
       subject: subject,
-      html: html,
+      html: htmlOfEmail,
     });
 
-    // Log the response for debugging
-
-    if (response.error) {
-      return NextResponse.json({ error: response.error }, { status: 500 });
+    if (!response.messageId) {
+      return NextResponse.json({ message: "Email delivery failed" });
     }
-    return NextResponse.json({ message: "Email sent successfully" });
+    return NextResponse.json({
+      message: "Email sent successfully",
+      data: response.messageId,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to send email" + error },
