@@ -139,6 +139,8 @@ export function EmailComponent({
           <table
             style={{
               width: "100%",
+              maxWidth: "600px",
+              margin: style.margin || "0 auto",
               borderCollapse: "collapse",
               ...style,
             }}

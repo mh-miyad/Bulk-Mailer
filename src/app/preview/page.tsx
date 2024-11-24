@@ -35,7 +35,19 @@ export default function PreviewPage() {
       action: {
         label: "Undo",
         onClick: () => {
-          console.log(htmlOfEmail);
+          toast.dismiss();
+        },
+      },
+    });
+  };
+  const handleSaveAsTemplate = () => {
+    console.log(htmlOfEmail);
+    toast("Save as template", {
+      description: `${Date.now()}.html`,
+      position: "bottom-right",
+      action: {
+        label: "Undo",
+        onClick: () => {
           navigator.clipboard.writeText("");
           setHtmlOfEmail("");
           toast.dismiss();
@@ -43,7 +55,6 @@ export default function PreviewPage() {
       },
     });
   };
-
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto">
@@ -63,13 +74,16 @@ export default function PreviewPage() {
               <Copy className="h-4 w-4" />
               Copy HTML
             </Button>
+            <Button className="gap-2" onClick={handleSaveAsTemplate}>
+              Save As Template
+            </Button>
             <Button className="gap-2">
               <Eye className="h-4 w-4" />
               Send Test Email
             </Button>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-8">
+        <div className="bg-white dark:bg-slate-950 border rounded-lg shadow-md p-8 max-w-[600px] mx-auto">
           {components.map((component, index) => (
             <EmailComponent key={index} component={component} preview />
           ))}

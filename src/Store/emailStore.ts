@@ -22,7 +22,7 @@ const createDefaultProps = (): ComponentProps => ({
     color: "#000000",
     backgroundColor: "#ffffff",
     fontSize: "16px",
-    padding: "16px",
+    padding: "0px",
     margin: "0px",
     textAlign: "left",
   },
