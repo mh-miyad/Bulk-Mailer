@@ -22,6 +22,7 @@ const components = [
   { id: "heading", icon: Heading, label: "Heading" },
   { id: "text", icon: Type, label: "Text Block" },
   { id: "image", icon: Image, label: "Image" },
+  { id: "image_with_link", icon: Image, label: "Image With Link" },
   { id: "button", icon: Mail, label: "Button" },
   { id: "link", icon: Link, label: "Link" },
   { id: "list", icon: List, label: "List" },

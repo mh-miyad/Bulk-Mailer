@@ -50,6 +50,18 @@ export function EmailComponent({
             style={style}
           />
         );
+      case "image with link":
+        return (
+          <EmailLink href={component.props.href || "#"} style={style}>
+            <Img
+              src={component.props.src || "https://via.placeholder.com/600x200"}
+              alt={component.props.alt || "Image"}
+              width={600}
+              height={200}
+              style={style}
+            />
+          </EmailLink>
+        );
       case "button":
         return (
           <EmailButton
