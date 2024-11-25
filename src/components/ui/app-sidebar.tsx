@@ -72,7 +72,7 @@ const data = {
         },
         {
           title: "Layouts",
-          url: "#",
+          url: "/layout",
           icon: Layers,
         },
         {
@@ -92,7 +92,7 @@ const data = {
         },
         {
           title: "Testing",
-          url: "#",
+          url: "/testing",
           icon: TestTube,
         },
         {
@@ -160,18 +160,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarGroupContent className="pl-4 my-3">
                 <SidebarMenu>
                   {item.items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton isActive={item.url === router}>
-                        <item.icon className="mr-2 h-7 w-7" />
-
-                        <Link
-                          href={item.url}
-                          onClick={() => setBreadcrumbs(item.title)}
-                        >
-                          {item.title}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
+                    <Link
+                      key={item.title}
+                      href={item.url}
+                      onClick={() => setBreadcrumbs(item.title)}
+                    >
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={item.url === router}>
+                          <item.icon className="mr-2 h-7 w-7" />
+                          <span>{item.title}</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </Link>
                   ))}
                 </SidebarMenu>
               </SidebarGroupContent>

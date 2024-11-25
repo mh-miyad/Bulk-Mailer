@@ -1,65 +1,62 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Title4Cards from "@/Email/Ecommarce/ecommarce-1";
-import Title3Cards from "@/Email/Ecommarce/ecommarce-2";
-import StackOverflowTipsEmail from "@/Email/WelcomeMail";
-import { render } from "@react-email/render";
-import { useEffect, useState } from "react";
-
-// Email templates
-const emailTemplates = [
-  {
-    id: 1,
-    title: "Stack Overflow Tips",
-    template: <StackOverflowTipsEmail />,
-  },
-  {
-    id: 2,
-    title: "Stack Overflow Tips",
-    template: <Title4Cards />,
-  },
-  {
-    id: 3,
-    title: "Stack Overflow Tips",
-    template: <Title3Cards />,
-  },
-];
+import useStore from "@/Store/Store";
+import { useRouter } from "next/navigation";
 
 const TemplateMailPage = () => {
-  // Store rendered HTML templates
-  const [renderedTemplates, setRenderedTemplates] = useState<string[]>([]);
-
-  useEffect(() => {
-    // Async function to fetch and render all templates
-    const fetchData = async () => {
-      const renderedHtmlTemplates: string[] = [];
-
-      // Render each template to HTML
-      for (const template of emailTemplates) {
-        const html = await render(template.template);
-        renderedHtmlTemplates.push(html);
-      }
-
-      // Set all rendered HTML in state at once
-      setRenderedTemplates(renderedHtmlTemplates);
-    };
-
-    fetchData();
-  }, []);
+  const { htmlArray, deleteHtml } = useStore();
+  const router = useRouter();
+  const handleUseTemplate = (id: string) => {
+    router.push(`/testing/${id}`);
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
-      {renderedTemplates.map((htmlContent, index) => (
+      {htmlArray.map((htmlContent, index) => (
         <div key={index}>
-          <ScrollArea>
-            {/* Display the rendered HTML in an iframe */}
-            <iframe
-              srcDoc={htmlContent}
-              title={`Email Preview ${index + 1}`}
-              className="w-full h-full min-h-screen bg-transparent border rounded-md shadow-lg"
-            ></iframe>
-          </ScrollArea>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-5">
+              <CardTitle className="text-sm font-medium">
+                Email Preview {htmlContent.templateName}
+              </CardTitle>
+              <div className="flex gap-2">
+                <Button
+                  variant={"destructive"}
+                  onClick={() => deleteHtml(index)}
+                >
+                  {"Delete"}
+                </Button>
+              </div>
+            </CardHeader>
+
+            <CardContent>
+              <ScrollArea className="h-[calc(100vh-20rem)]">
+                <iframe
+                  srcDoc={htmlContent.html}
+                  title={`Email Preview ${index + 1}`}
+                  className="w-full h-full min-h-screen bg-transparent border rounded-md shadow-lg"
+                ></iframe>
+              </ScrollArea>
+            </CardContent>
+
+            <CardFooter>
+              <button
+                onClick={() => handleUseTemplate(htmlContent.templateId)}
+                className="bg-blue-500/20 hover:bg-blue-700/50 text-white font-normal uppercase px-4 rounded-full w-full py-4 drop-shadow-2xl"
+              >
+                Use This Template
+              </button>
+            </CardFooter>
+          </Card>
         </div>
       ))}
     </div>
