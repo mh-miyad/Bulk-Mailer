@@ -52,12 +52,15 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       email: sendMailData.email,
     };
     setLoading(true);
-    const respose = await axios.post("http://localhost:3001/api/send", {
+    const respose = await axios.post("http://localhost:3000/api/send", {
       data,
       htmlOfEmail: htmlContent,
     });
-    if (respose.data.messageId) {
-      toast.success("Email sent successfully");
+    if (respose.data) {
+      toast.success("Email sent successfully", {
+        description: "Email sent successfully",
+        position: "top-right",
+      });
       setLoading(false);
     }
   };
@@ -130,7 +133,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
           </div>
           <DialogFooter>
             <Button type="submit" onClick={handleSendTestEmail}>
-              {loading ? "loading..." : "Save changes"}
+              {loading ? "loading..." : "Send mail"}
             </Button>
           </DialogFooter>
         </DialogContent>
