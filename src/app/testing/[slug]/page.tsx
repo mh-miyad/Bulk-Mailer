@@ -14,6 +14,7 @@ import useStore from "@/Store/Store";
 import axios from "axios";
 import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface TestingPageProps {
   params: Promise<{ slug: string }>;
@@ -55,8 +56,8 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       data,
       htmlOfEmail: htmlContent,
     });
-    if (respose) {
-      console.log(respose.data);
+    if (respose.data.messageId) {
+      toast.success("Email sent successfully");
       setLoading(false);
     }
   };
