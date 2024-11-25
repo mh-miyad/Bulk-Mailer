@@ -41,7 +41,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
     subject: "Eyaana Campaign Dubai",
     html: null,
     // email: "miyad@resend-demo.com",
-    email: "onboarding@resend.dev",
+    email: "mhmiyad21@gmail.com",
   });
   const [open, setOpen] = useState(false);
   const handleSendTestEmail = async () => {
@@ -51,11 +51,12 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       email: sendMailData.email,
     };
     setLoading(true);
-    const respose = await axios.post("http://localhost:3000/api/send", {
+    const respose = await axios.post("http://localhost:3001/api/send", {
       data,
       htmlOfEmail: htmlContent,
     });
     if (respose) {
+      console.log(respose.data);
       setLoading(false);
     }
   };
