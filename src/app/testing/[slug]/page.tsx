@@ -85,10 +85,17 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
     };
     console.log(cleanHtmlTemplate(htmlContent));
     setLoading(true);
-    const respose = await axios.post("http://localhost:3000/api/send", {
-      data,
-      htmlOfEmail: cleanHtmlTemplate(htmlContent),
-    });
+    const respose = await axios.post(
+      `${
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3000"
+          : `${process.env.NEXT_PRODUCTION_URL}`
+      }/api/send`,
+      {
+        data,
+        htmlOfEmail: cleanHtmlTemplate(htmlContent),
+      }
+    );
     if (respose.data) {
       toast.success("Email sent successfully", {
         description: "Email sent successfully",
@@ -143,7 +150,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
               </Label>
               <Input
                 id="from"
-                defaultValue="onboarding@resend.dev"
+                defaultValue="mhmiyad21@gmail.com"
                 className="col-span-3"
                 onChange={(e) =>
                   setSendMailData({ ...sendMailData, email: e.target.value })
