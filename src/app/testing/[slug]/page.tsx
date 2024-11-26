@@ -73,7 +73,8 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
     subject: "Eyaana Campaign Dubai",
     html: null,
     // email: "miyad@resend-demo.com",
-    email: "mhmiyad21@gmail.com",
+    // email: "mhmiyad21@gmail.com",
+    email: "mhmiyad6565@outlook.com",
   });
   const [open, setOpen] = useState(false);
   const handleSendTestEmail = async () => {
