@@ -29,9 +29,8 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
     const fetchParams = async () => {
       const { slug } = await params;
       if (slug) {
-        console.log(slug);
         const template = htmlArray.find((html) => html.templateId === slug);
-        console.log(template);
+
         setHtmlContent(template?.html || null);
       }
     };
@@ -83,7 +82,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       subject: sendMailData.subject,
       email: sendMailData.email,
     };
-    console.log(cleanHtmlTemplate(htmlContent));
+
     setLoading(true);
     const respose = await axios.post(
       `${

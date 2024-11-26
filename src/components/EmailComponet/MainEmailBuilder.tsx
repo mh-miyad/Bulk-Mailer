@@ -15,7 +15,7 @@ const MainEmailBuilder = () => {
 
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
-      console.log(html);
+
       const template = {
         templateName,
         templateId: uuidv4(),
@@ -28,7 +28,7 @@ const MainEmailBuilder = () => {
     });
   };
   const onReady: EmailEditorProps["onReady"] = (unlayer) => {
-    console.log(unlayer);
+    // console.log(unlayer);
   };
   return (
     <div>
