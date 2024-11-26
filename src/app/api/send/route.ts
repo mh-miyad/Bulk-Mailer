@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const { to, email, subject } = await data;
   try {
     const response = await MailSenderProvider.sendMail({
-      from: email,
+      from: `"Mahamudul hasan Miyad" <${email}>`,
       to: to,
       subject: subject,
       html: htmlOfEmail,

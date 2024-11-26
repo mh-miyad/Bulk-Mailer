@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +38,37 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
     fetchParams();
   }, [params, htmlArray]);
   const [loading, setLoading] = useState(false);
+
+  const cleanHtmlTemplate = (htmlContent: string | null): string => {
+    // Handle case when htmlContent is null
+    if (!htmlContent) {
+      return "";
+    }
+    const removePatterns = [
+      /<!--\[if[^]*?\[endif\]-->/gi,
+      /<!DOCTYPE[^>]*>/gi,
+      /<title>[^]*?<\/title>/gi,
+      /<meta[^>]*>/gi,
+      /<html[^>]*>/gi,
+      /<\/html>/gi,
+    ];
+
+    // Apply each regex pattern to the content
+    let cleanedContent = htmlContent;
+    removePatterns.forEach((pattern) => {
+      cleanedContent = cleanedContent.replace(pattern, "");
+    });
+    cleanedContent = cleanedContent
+      .replace(/\s{2,}/g, " ") // Replace multiple spaces with a single space
+      .replace(/>[\r\n\s]*</g, "><") // Remove spaces and newlines between tags
+      .replace(/<!--.*?-->/g, "") // Remove HTML comments
+      .replace(/\s*=\s*/g, "=") // Remove spaces around '=' in attributes
+      .replace(/"\s+/g, '"') // Remove trailing spaces after attribute values
+      .replace(/\s+"/g, '"') // Remove leading spaces before attribute values
+      .trim(); // Trim any remaining whitespace
+    return cleanedContent;
+  };
+
   const [sendMailData, setSendMailData] = useState({
     to: "miyad@royex.net",
     subject: "Eyaana Campaign Dubai",
@@ -51,10 +83,11 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       subject: sendMailData.subject,
       email: sendMailData.email,
     };
+    console.log(cleanHtmlTemplate(htmlContent));
     setLoading(true);
     const respose = await axios.post("http://localhost:3000/api/send", {
       data,
-      htmlOfEmail: htmlContent,
+      htmlOfEmail: cleanHtmlTemplate(htmlContent),
     });
     if (respose.data) {
       toast.success("Email sent successfully", {

@@ -15,6 +15,7 @@ const MainEmailBuilder = () => {
 
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
+      console.log(html);
       const template = {
         templateName,
         templateId: uuidv4(),
