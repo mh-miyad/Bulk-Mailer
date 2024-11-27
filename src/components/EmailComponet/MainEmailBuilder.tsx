@@ -43,6 +43,13 @@ const MainEmailBuilder = () => {
           ref={emailEditorRef}
           onReady={onReady}
           minHeight={"100vh"}
+          options={{
+            customCSS: `
+      .blockbuilder-branding {
+        display: none !important;
+      }
+    `,
+          }}
           style={{
             backgroundColor: "black",
           }}

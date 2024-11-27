@@ -16,7 +16,7 @@ const TemplateMailPage = () => {
   const { htmlArray, deleteHtml } = useStore();
   const router = useRouter();
   const handleUseTemplate = (id: string) => {
-    router.push(`/testing/${id}`);
+    router.push(`/preview?id=${id}`);
   };
 
   return (
@@ -53,7 +53,7 @@ const TemplateMailPage = () => {
                 onClick={() => handleUseTemplate(htmlContent.templateId)}
                 className="bg-blue-500/20 hover:bg-blue-700/50 text-white font-normal uppercase px-4 rounded-full w-full py-4 drop-shadow-2xl"
               >
-                Use This Template
+                Use This template
               </button>
             </CardFooter>
           </Card>
