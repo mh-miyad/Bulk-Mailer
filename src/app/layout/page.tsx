@@ -1,11 +1,5 @@
-import MainEmailBuilder from "@/components/EmailComponet/MainEmailBuilder";
-
 const EmailLayout = () => {
-  return (
-    <div>
-      <MainEmailBuilder />
-    </div>
-  );
+  return <div>upcomming</div>;
 };
 
 export default EmailLayout;

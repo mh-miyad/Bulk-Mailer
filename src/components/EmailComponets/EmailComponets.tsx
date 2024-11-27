@@ -208,7 +208,15 @@ export function EmailComponent({
   };
 
   if (preview) {
-    return <div className="mb-4">{renderComponent()}</div>;
+    return (
+      <div
+        style={{
+          marginBottom: "20px",
+        }}
+      >
+        {renderComponent()}
+      </div>
+    );
   }
 
   return (

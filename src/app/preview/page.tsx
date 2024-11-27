@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -14,9 +15,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEmailStore } from "@/Store/emailStore";
-import { Body, Container, Head, Html, Preview } from "@react-email/components";
+import { Body, Container, Head, Html } from "@react-email/components";
 import { render } from "@react-email/render";
-import axios from "axios";
+// import axios from "axios";
 
 import { ArrowLeft, Copy, Eye } from "lucide-react";
 import Link from "next/link";
@@ -31,7 +32,6 @@ export default function PreviewPage() {
     const emailHtml = await render(
       <Html>
         <Head />
-        <Preview>Email Preview</Preview>
         <Body style={{ fontFamily: "Arial, sans-serif" }}>
           <Container>
             {components.map((component, index) => (
@@ -53,6 +53,35 @@ export default function PreviewPage() {
         },
       },
     });
+  };
+  const cleanHtmlTemplate = (htmlContent: string | null): string => {
+    // Handle case when htmlContent is null
+    if (!htmlContent) {
+      return "";
+    }
+    const removePatterns = [
+      /<!--\[if[^]*?\[endif\]-->/gi,
+      /<!DOCTYPE[^>]*>/gi,
+      /<title>[^]*?<\/title>/gi,
+      /<meta[^>]*>/gi,
+      /<html[^>]*>/gi,
+      /<\/html>/gi,
+    ];
+
+    // Apply each regex pattern to the content
+    let cleanedContent = htmlContent;
+    removePatterns.forEach((pattern) => {
+      cleanedContent = cleanedContent.replace(pattern, "");
+    });
+    cleanedContent = cleanedContent
+      .replace(/\s{2,}/g, " ") // Replace multiple spaces with a single space
+      .replace(/>[\r\n\s]*</g, "><") // Remove spaces and newlines between tags
+      .replace(/<!--.*?-->/g, "") // Remove HTML comments
+      .replace(/\s*=\s*/g, "=") // Remove spaces around '=' in attributes
+      .replace(/"\s+/g, '"') // Remove trailing spaces after attribute values
+      .replace(/\s+"/g, '"') // Remove leading spaces before attribute values
+      .trim(); // Trim any remaining whitespace
+    return cleanedContent;
   };
   const handleSaveAsTemplate = () => {
     toast("Save as template", {
@@ -77,23 +106,24 @@ export default function PreviewPage() {
     email: "onboarding@resend.dev",
   });
   const handleSendTestEmail = async () => {
-    if (htmlOfEmail === "") {
-      toast.error("Please copy html first");
-      return;
-    }
-    const data = {
-      to: sendMailData.to,
-      subject: sendMailData.subject,
-      email: sendMailData.email,
-    };
-    setLoading(true);
-    const respose = await axios.post("http://localhost:3000/api/send", {
-      data,
-      htmlOfEmail,
-    });
-    if (respose) {
-      setLoading(false);
-    }
+    console.log(cleanHtmlTemplate(htmlOfEmail));
+    // if (htmlOfEmail === "") {
+    //   toast.error("Please copy html first");
+    //   return;
+    // }
+    // const data = {
+    //   to: sendMailData.to,
+    //   subject: sendMailData.subject,
+    //   email: sendMailData.email,
+    // };
+    // setLoading(true);
+    // const respose = await axios.post("http://localhost:3000/api/send", {
+    //   data,
+    //   htmlOfEmail,
+    // });
+    // if (respose) {
+    //   setLoading(false);
+    // }
   };
   return (
     <>

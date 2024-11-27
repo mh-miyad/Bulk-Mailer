@@ -67,7 +67,7 @@ const data = {
       items: [
         {
           title: "Components",
-          url: "#",
+          url: "/emailComponentsPage",
           icon: LayoutGrid,
         },
         {

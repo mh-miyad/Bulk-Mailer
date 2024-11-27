@@ -1,9 +1,10 @@
-import EmailBuilder from "@/components/EmailComponets/EmailBuilder";
+import MainEmailBuilder from "@/components/EmailComponet/MainEmailBuilder";
 
 const EmailBuilderPage = () => {
   return (
     <div>
-      <EmailBuilder />
+      {/* <EmailBuilder /> */}
+      <MainEmailBuilder />
     </div>
   );
 };
