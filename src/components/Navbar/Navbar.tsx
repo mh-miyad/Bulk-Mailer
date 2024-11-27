@@ -12,7 +12,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Switch } from "@/components/ui/switch";
 import useStore from "@/Store/Store";
 import { Bell, Globe, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -39,7 +38,7 @@ const notifications = [
 ];
 
 const Navbar = ({ comp }: { comp: ReactElement }) => {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const { breadcrumbs } = useStore();
   return (
     <>
@@ -116,17 +115,26 @@ const Navbar = ({ comp }: { comp: ReactElement }) => {
               </PopoverContent>
             </Popover>
 
-            <Switch
-              checked={theme === "dark"}
-              onCheckedChange={() =>
-                setTheme(theme === "dark" ? "light" : "dark")
-              }
-              className="ml-4"
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Switch>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>

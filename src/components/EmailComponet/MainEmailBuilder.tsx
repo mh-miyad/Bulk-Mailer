@@ -6,6 +6,7 @@ import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
+
 const MainEmailBuilder = () => {
   const emailEditorRef = useRef<EditorRef>(null);
   const { addHtml } = useStore();
