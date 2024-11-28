@@ -19,11 +19,10 @@ import { toast } from "sonner";
 
 // Define a more specific type for the JSON template
 interface UnlayerDesign {
-  counters?: object;
-  body?: object;
-  page?: object;
-  // Add other potential properties
-  [key: string]: any;
+  counters?: Record<string, number>; // Match JSONTemplate
+  body?: any;
+  page?: any;
+  [key: string]: any; // Allow additional properties
 }
 
 interface Template {
@@ -91,6 +90,9 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
       setOpenModal(false);
     });
   };
+  const isUnlayerDesign = (json: object): json is UnlayerDesign => {
+    return typeof json === "object" && json !== null && "body" in json;
+  };
 
   const handleEdit = () => {
     const unlayer = emailEditorRef.current?.editor;
@@ -98,7 +100,18 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     if (currentTemplate?.json) {
       setLoading(true);
       try {
-        unlayer?.loadDesign(currentTemplate.json);
+        const design = currentTemplate.json as UnlayerDesign;
+
+        // Ensure required properties have default values
+        const completeDesign = {
+          ...design,
+          counters: design.counters || {}, // Ensure counters is a Record<string, number>
+          body: design.body || {}, // Ensure body has a default
+          page: design.page || {}, // Ensure page has a default
+        };
+
+        // Load design into the editor
+        unlayer?.loadDesign(completeDesign);
         setLoading(false);
         setShowEdit(true);
       } catch (error) {
@@ -110,7 +123,6 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
       toast.error("No template design found");
     }
   };
-
   const handleOpenModal = () => {
     setTemplateName(currentTemplate?.templateName || "");
     setOpenModal(true);
@@ -124,7 +136,12 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const onReady: EmailEditorProps["onReady"] = (unlayer: any) => {
     if (currentTemplate?.json) {
       try {
-        unlayer.loadDesign(currentTemplate.json);
+        // Same structure handling on editor ready
+        const completeDesign: UnlayerDesign = {
+          ...currentTemplate.json,
+        };
+
+        unlayer.loadDesign(completeDesign);
       } catch (error) {
         console.error("Failed to load design on ready:", error);
         toast.error("Failed to load template design");

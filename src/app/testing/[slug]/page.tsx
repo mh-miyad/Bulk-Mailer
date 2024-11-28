@@ -102,6 +102,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
         position: "top-right",
       });
       setLoading(false);
+      setOpen(false);
     }
   };
   return (

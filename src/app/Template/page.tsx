@@ -54,7 +54,7 @@ const TemplateMailPage = () => {
                 onClick={() => handleUseTemplate(htmlContent.templateId)}
                 className="bg-blue-500/20 hover:bg-blue-700/50 text-white font-normal uppercase px-4 rounded-full w-full py-4 drop-shadow-2xl"
               >
-                Use This template
+                View This Template
               </button>
             </CardFooter>
           </Card>
