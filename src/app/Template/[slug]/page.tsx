@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,27 @@ import { useEffect, useRef, useState } from "react";
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import { toast } from "sonner";
 
+// Define a more specific type for the JSON template
+interface UnlayerDesign {
+  counters?: object;
+  body?: object;
+  page?: object;
+  // Add other potential properties
+  [key: string]: any;
+}
+
+interface Template {
+  templateName: string;
+  templateId: string;
+  createdDate: string;
+  html: string;
+  json?: UnlayerDesign; // Update the json type
+}
+
 const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const [id, setId] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(true);
-  const { htmlArray, addHtml, updateHtml } = useStore(); // Add updateHtml method
+  const [loading, setLoading] = useState(true);
+  const { htmlArray, addHtml, updateHtml } = useStore();
   const [showEdit, setShowEdit] = useState(false);
   const emailEditorRef = useRef<EditorRef>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -29,7 +47,7 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     const fetchParams = async () => {
       const resolvedParams = await params;
       setId(resolvedParams.slug);
-      // setLoading(false);
+      setLoading(false);
     };
 
     fetchParams();
@@ -45,13 +63,20 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
 
-      const template = {
+      // Ensure design has the required properties
+      const completeDesign: UnlayerDesign = {
+        ...(design || {}),
+        counters: design?.counters || {},
+        body: design?.body || {},
+      };
+
+      const template: Template = {
         templateName:
           templateName || currentTemplate?.templateName || "Unnamed Template",
-        templateId: `${id}`, // Use the existing ID
+        templateId: `${id}`,
         createdDate: new Date().toISOString(),
         html,
-        json: design,
+        json: completeDesign,
       };
 
       // If template with same ID exists, update it. Otherwise, add new.
@@ -71,10 +96,16 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
     const unlayer = emailEditorRef.current?.editor;
 
     if (currentTemplate?.json) {
-      // setLoading(true);
-      unlayer?.loadDesign(currentTemplate?.json);
-      // setLoading(false);
-      setShowEdit(true);
+      setLoading(true);
+      try {
+        unlayer?.loadDesign(currentTemplate.json);
+        setLoading(false);
+        setShowEdit(true);
+      } catch (error) {
+        console.error("Failed to load design:", error);
+        toast.error("Failed to load template design");
+        setLoading(false);
+      }
     } else {
       toast.error("No template design found");
     }
@@ -92,9 +123,15 @@ const PreviewPage = ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const onReady: EmailEditorProps["onReady"] = (unlayer: any) => {
     if (currentTemplate?.json) {
-      unlayer.loadDesign(currentTemplate.json);
+      try {
+        unlayer.loadDesign(currentTemplate.json);
+      } catch (error) {
+        console.error("Failed to load design on ready:", error);
+        toast.error("Failed to load template design");
+      }
     }
   };
+
   return (
     <div>
       <div className="flex justify-between items-center px-10 my-5">
