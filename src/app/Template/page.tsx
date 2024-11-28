@@ -16,7 +16,7 @@ const TemplateMailPage = () => {
   const { htmlArray, deleteHtml } = useStore();
   const router = useRouter();
   const handleUseTemplate = (id: string) => {
-    router.push(`/preview?id=${id}`);
+    router.push(`/Template/${id}`);
   };
 
   return (
