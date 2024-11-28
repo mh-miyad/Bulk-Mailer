@@ -48,9 +48,9 @@ const FixNavbar = () => {
     >
       <nav
         className={cn(
-          "w-full transition-all duration-300 border-b rounded-full px-10",
+          "w-full transition-all duration-300 border-2 rounded-full px-10",
           isScrolled
-            ? "py-3  bg-background/60 backdrop-blur-lg shadow-sm border-border/40"
+            ? "py-3  bg-slate-50 dark:bg-slate-900 backdrop-blur-lg shadow-sm  border-blue-900/30"
             : "py-5 bg-transparent border-transparent"
         )}
       >
@@ -60,11 +60,11 @@ const FixNavbar = () => {
             <Link href={"/"}>
               <div className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <CircuitBoard
-                  className="h-6 w-6 text-primary"
-                  strokeWidth={2.5}
+                  className="h-8 w-8 text-blue-400"
+                  strokeWidth={1.5}
                 />
-                <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                  MailDraft
+                <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent uppercase">
+                  <span className="">Draftex</span>
                 </span>
               </div>
             </Link>
