@@ -19,15 +19,7 @@ import { VersionSwitcher } from "./version-switcher";
 
 // Import the icons you need
 import useStore from "@/Store/Store";
-import {
-  Code,
-  FileText,
-  Image,
-  Layers,
-  LayoutGrid,
-  Send,
-  TestTube,
-} from "lucide-react"; // Lucide Icons
+import { FileText, Image, Send, TestTube } from "lucide-react"; // Lucide Icons
 import { usePathname } from "next/navigation";
 import {
   FaDraftingCompass,
@@ -35,6 +27,7 @@ import {
   FaHome,
   FaUserFriends,
 } from "react-icons/fa"; // React Icons
+import { MdOutlineCampaign } from "react-icons/md";
 import { SidebarOptInForm } from "./sidebar-comp-opt";
 import { SideBarUser } from "./sidebar-user";
 
@@ -54,9 +47,14 @@ const data = {
           isActive: true,
         },
         {
-          title: "Projects And Teams",
-          url: "#",
+          title: "Contact List ",
+          url: "/contact-list",
           icon: FaUserFriends,
+        },
+        {
+          title: "Campaign ",
+          url: "/createCampaign",
+          icon: MdOutlineCampaign,
         },
       ],
     },
@@ -65,16 +63,6 @@ const data = {
       url: "#",
       icon: FaEnvelope,
       items: [
-        {
-          title: "Components",
-          url: "/emailComponentsPage",
-          icon: LayoutGrid,
-        },
-        {
-          title: "Layouts",
-          url: "/layout",
-          icon: Layers,
-        },
         {
           title: "Templates",
           url: "/Template",
@@ -86,19 +74,9 @@ const data = {
           icon: FaDraftingCompass,
         },
         {
-          title: "Drafts",
-          url: "#",
-          icon: Code,
-        },
-        {
           title: "Testing",
           url: "/testing",
           icon: TestTube,
-        },
-        {
-          title: "Examples",
-          url: "#",
-          icon: FileText,
         },
       ],
     },
