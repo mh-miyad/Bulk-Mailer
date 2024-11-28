@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/sonner";
-import Layout from "@/layout/Layout";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -31,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Layout>{children}</Layout>
+        {children}
         <Toaster />
       </body>
     </html>

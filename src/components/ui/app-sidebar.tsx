@@ -14,7 +14,6 @@ import {
 import Link from "next/link";
 import * as React from "react";
 import { ScrollArea } from "./scroll-area";
-import { SearchForm } from "./search-form";
 import { VersionSwitcher } from "./version-switcher";
 
 // Import the icons you need
@@ -123,11 +122,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
           }}
         />
-        <SearchForm className="my-4" />
       </SidebarHeader>
-      <ScrollArea>
-        <SidebarContent className="bg-white dark:bg-slate-950">
-          {/* We create a SidebarGroup for each parent. */}
+      <SidebarContent className="bg-white dark:bg-slate-950">
+        {/* We create a SidebarGroup for each parent. */}
+        <ScrollArea className="max-h-[70vh]">
           {data.navMain.map((item) => (
             <SidebarGroup key={item.title} className="mb-2">
               <SidebarGroupLabel>
@@ -155,17 +153,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </SidebarGroupContent>
             </SidebarGroup>
           ))}
-
-          <div className="p-3">
-            <SidebarOptInForm />
-            <VersionSwitcher
-              versions={data.versions}
-              defaultVersion={data.versions[0]}
-            />
-          </div>
-        </SidebarContent>
-        <SidebarRail />
-      </ScrollArea>
+        </ScrollArea>
+        <div className="p-3">
+          <SidebarOptInForm />
+          <VersionSwitcher
+            versions={data.versions}
+            defaultVersion={data.versions[0]}
+          />
+        </div>
+      </SidebarContent>
+      <SidebarRail />
     </Sidebar>
   );
 }

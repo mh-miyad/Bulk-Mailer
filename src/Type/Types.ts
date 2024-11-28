@@ -42,3 +42,42 @@ export interface ComponentType {
 export interface HistoryState {
   components: ComponentType[];
 }
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  status: "subscribed" | "unsubscribed";
+  dateAdded: string;
+}
+
+export interface Campaign {
+  id: string;
+  name: string;
+  status: "draft" | "scheduled" | "sent";
+  sentCount: number;
+  openRate: number;
+  clickRate: number;
+}
+
+export interface DashboardStats {
+  totalContacts: number;
+  activeContacts: number;
+  totalCampaigns: number;
+  averageOpenRate: number;
+  emailsSent: number;
+  openRate: number;
+  clickRate: number;
+}
+
+export interface DashboardState {
+  contacts: Contact[];
+  campaigns: Campaign[];
+  stats: DashboardStats;
+}
+
+export interface DashboardActions {
+  setContacts: (contacts: Contact[]) => void;
+  setCampaigns: (campaigns: Campaign[]) => void;
+  updateStats: () => void;
+  fetchDashboardData: () => Promise<void>;
+}

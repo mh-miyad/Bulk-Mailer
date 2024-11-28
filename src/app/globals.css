@@ -86,3 +86,21 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.dark .dark\:shadow-highlight {
+  --tw-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  --tw-shadow-colored: 0 0 15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
