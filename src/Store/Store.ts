@@ -5,6 +5,7 @@ interface Template {
   templateId: string;
   createdDate: string;
   html: string;
+  json?: object;
 }
 
 interface StoreOFSate {

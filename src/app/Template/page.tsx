@@ -13,9 +13,10 @@ import useStore from "@/Store/Store";
 import { useRouter } from "next/navigation";
 
 const TemplateMailPage = () => {
-  const { htmlArray, deleteHtml } = useStore();
+  const { htmlArray, deleteHtml, setBreadcrumbs } = useStore();
   const router = useRouter();
   const handleUseTemplate = (id: string) => {
+    setBreadcrumbs(`Email Preview ${id}`);
     router.push(`/Template/${id}`);
   };
 

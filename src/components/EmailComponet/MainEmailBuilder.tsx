@@ -22,6 +22,7 @@ const MainEmailBuilder = () => {
         templateId: uuidv4(),
         createdDate: new Date().toISOString(),
         html,
+        json: design,
       };
 
       addHtml(template);
