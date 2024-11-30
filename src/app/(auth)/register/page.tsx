@@ -112,7 +112,7 @@ const RegisterPage = () => {
             >
               {loading ? (
                 <>
-                  <Spinner /> Loading...
+                  <Spinner />
                 </>
               ) : (
                 "Create Account"

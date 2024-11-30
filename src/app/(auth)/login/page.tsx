@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { signWithEmailAndPassword } from "@/Authentication/firebase.init";
+import Spinner from "@/components/ui/spinner";
 import { Label } from "@/components/web/label";
 import LabelInputContainer from "@/components/web/LabelContent";
 import { Input } from "@/components/web/M_input";
@@ -27,12 +28,12 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
+
     const { email, password } = data;
     const userCredential = await signWithEmailAndPassword({
       email,
       password,
     });
-
     if (userCredential.user.uid) {
       setLoading(false);
       toast.success("Log In Successful", {
@@ -79,10 +80,18 @@ const LoginPage = () => {
               {errors.password && <span>This field is required</span>}
             </LabelInputContainer>
             <button
-              className="bg-gradient-to-br relative group/btn from-black/20 dark:from-zinc-900/10 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800/30 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              className={`${
+                loading ? "opacity-50 pointer-events-none" : ""
+              } bg-gradient-to-br relative group/btn from-black/20 dark:from-zinc-900/10 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800/30 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]`}
               type="submit"
             >
-              Log In
+              {loading ? (
+                <>
+                  <Spinner />
+                </>
+              ) : (
+                "Create Account"
+              )}
               <BottomGradient />
             </button>
 
