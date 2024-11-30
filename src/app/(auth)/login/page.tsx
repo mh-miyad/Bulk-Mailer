@@ -75,7 +75,13 @@ const LoginPage = () => {
                 id="password"
                 placeholder="••••••••"
                 type="password"
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: true,
+                  minLength: {
+                    message: "Please enter your password",
+                    value: 6,
+                  },
+                })}
               />
               {errors.password && <span>This field is required</span>}
             </LabelInputContainer>
