@@ -1,10 +1,36 @@
-"use server";
 import {
+  Auth,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import { SignInAndSignUp } from "./../Type/Authentication";
 import { auth } from "./firebase.config";
+type FirebaseUser = {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+  emailVerified: boolean;
+};
+
+export const getUser = async (auth: Auth) => {
+  onAuthStateChanged(auth, (user: User | null) => {
+    if (user) {
+      const userData: FirebaseUser = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+      };
+      return userData;
+    } else {
+      return null;
+    }
+  });
+};
 
 export const signWithEmailAndPassword = async ({
   email,
@@ -18,7 +44,7 @@ export const signWithEmailAndPassword = async ({
     );
     return userCredential;
   } catch (error) {
-    console.log("sign in error: " + error);
+    throw new Error("Error signing in" + " " + error);
   }
 };
 
@@ -34,6 +60,6 @@ export const createAccountEmailPassword = async ({
     );
     return userCredential;
   } catch (error) {
-    console.log("sign up error: " + error);
+    throw new Error("Error creating account" + " " + error);
   }
 };
