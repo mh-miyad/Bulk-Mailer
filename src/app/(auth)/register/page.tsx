@@ -13,9 +13,9 @@ interface Inputs {
   lastname: string;
   email: string;
   password: string;
-  twitterpassword?: string;
+  twitterpassword: string;
 }
-export default function UserForm() {
+const RegisterPage = () => {
   const {
     register,
     handleSubmit,
@@ -116,7 +116,9 @@ export default function UserForm() {
       </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;
 
 const BottomGradient = () => {
   return (
