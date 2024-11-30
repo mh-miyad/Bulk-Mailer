@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { auth } from "@/Authentication/firebase.config";
 import { createAccountEmailPassword } from "@/Authentication/firebase.init";
 import Spinner from "@/components/ui/spinner";
 import { Label } from "@/components/web/label";
@@ -20,6 +21,7 @@ interface Inputs {
 }
 const RegisterPage = () => {
   const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -34,6 +36,7 @@ const RegisterPage = () => {
     const userCredential = await createAccountEmailPassword({
       email: email,
       password: password,
+      auth: auth,
     });
 
     if (userCredential.user.uid) {

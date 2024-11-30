@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { auth } from "@/Authentication/firebase.config";
 import { signWithEmailAndPassword } from "@/Authentication/firebase.init";
 import Spinner from "@/components/ui/spinner";
 import { Label } from "@/components/web/label";
@@ -31,8 +32,9 @@ const LoginPage = () => {
 
     const { email, password } = data;
     const userCredential = await signWithEmailAndPassword({
-      email,
-      password,
+      email: email,
+      auth: auth,
+      password: password,
     });
     if (userCredential.user.uid) {
       setLoading(false);

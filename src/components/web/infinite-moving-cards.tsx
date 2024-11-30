@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
@@ -24,9 +25,6 @@ export const InfiniteMovingCards = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    addAnimation();
-  }, []);
   const [start, setStart] = useState(false);
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
@@ -59,6 +57,9 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+  useEffect(() => {
+    addAnimation();
+  }, [addAnimation]);
   const getSpeed = () => {
     if (containerRef.current) {
       if (speed === "fast") {

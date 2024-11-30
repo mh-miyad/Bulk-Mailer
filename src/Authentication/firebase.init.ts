@@ -6,7 +6,7 @@ import {
   User,
 } from "firebase/auth";
 import { SignInAndSignUp } from "./../Type/Authentication";
-import { auth } from "./firebase.config";
+
 type FirebaseUser = {
   uid: string;
   email: string | null;
@@ -35,6 +35,7 @@ export const getUser = async (auth: Auth) => {
 export const signWithEmailAndPassword = async ({
   email,
   password,
+  auth,
 }: SignInAndSignUp) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -50,6 +51,7 @@ export const signWithEmailAndPassword = async ({
 
 export const createAccountEmailPassword = async ({
   email,
+  auth,
   password,
 }: SignInAndSignUp) => {
   try {
