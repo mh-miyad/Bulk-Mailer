@@ -1,3 +1,4 @@
+import ProtectedLayout from "@/components/DisableApp/Disable";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/Theme/theme-provider";
 import type { Metadata } from "next";
@@ -37,7 +38,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ProtectedLayout>{children}</ProtectedLayout>
           <Toaster />
         </ThemeProvider>
       </body>

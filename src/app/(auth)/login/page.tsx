@@ -10,6 +10,7 @@ import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { CircuitBoard } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import nookies from "nookies";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -29,7 +30,6 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-
     const { email, password } = data;
     const userCredential = await signWithEmailAndPassword({
       email: email,
@@ -37,11 +37,29 @@ const LoginPage = () => {
       password: password,
     });
     if (userCredential.user.uid) {
-      setLoading(false);
+      const user = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        displayName: userCredential.user.displayName || "Anonymous",
+      };
+      nookies.set(null, "m_user_data", JSON.stringify(user), {
+        path: "/",
+        domain:
+          process.env.NODE_ENV !== "production"
+            ? process.env.NEXT_PRODUCTION_URL
+            : process.env.NEXT_DEVELOPMENT_URL,
+        maxAge: 3600,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        httpOnly: false,
+        expires: new Date(Date.now() + 3600 * 1000),
+      });
+
       toast.success("Log In Successful", {
         position: "top-center",
         duration: 5000,
       });
+      setLoading(false);
 
       router.push("/dashboard");
     } else {
@@ -98,7 +116,7 @@ const LoginPage = () => {
                   <Spinner />
                 </>
               ) : (
-                "Create Account"
+                "Log In"
               )}
               <BottomGradient />
             </button>

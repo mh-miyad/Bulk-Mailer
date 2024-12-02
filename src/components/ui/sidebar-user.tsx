@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
+import { BadgeCheck, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
 
+import { signOutUser } from "@/Authentication/firebase.init";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -25,6 +19,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
+import { destroyCookie } from "nookies";
+import { toast } from "sonner";
 
 export function SideBarUser({
   user,
@@ -35,7 +32,17 @@ export function SideBarUser({
     avatar: string;
   };
 }) {
+  const router = useRouter();
   const { isMobile } = useSidebar();
+  const logOutHandle = async () => {
+    await signOutUser();
+    destroyCookie(null, "m_user_data");
+    toast.success("Log Out Successful", {
+      position: "top-center",
+      duration: 5000,
+    });
+    router.push("/login");
+  };
 
   return (
     <SidebarMenu>
@@ -78,13 +85,6 @@ export function SideBarUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
@@ -92,13 +92,9 @@ export function SideBarUser({
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logOutHandle}>
               <LogOut />
               Log out
             </DropdownMenuItem>

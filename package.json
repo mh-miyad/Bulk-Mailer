@@ -10,7 +10,7 @@
     "mail": "email dev --dir ./src/Email"
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/core": "^6.2.0",
     "@getbrevo/brevo": "^2.2.0",
     "@gsap/react": "^2.1.1",
     "@headlessui/react": "^2.2.0",
@@ -31,15 +31,15 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "@react-email/components": "0.0.28",
     "@react-email/render": "1.0.2",
-    "@tabler/icons-react": "^3.22.0",
+    "@tabler/icons-react": "^3.23.0",
     "@tsparticles/engine": "^3.7.1",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.7.1",
     "@types/nodemailer": "^6.4.17",
     "@types/react-beautiful-dnd": "^13.1.8",
-    "apexcharts": "^4.0.0",
-    "axios": "^1.7.7",
-    "class-variance-authority": "^0.7.0",
+    "apexcharts": "^4.1.0",
+    "axios": "^1.7.8",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
@@ -69,27 +69,29 @@
     "resend": "^4.0.1",
     "run": "^1.5.0",
     "sonner": "^1.7.0",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.0.3",
     "zustand": "5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
+    "@types/node": "^20.17.9",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.0.3",
-    "postcss": "^8",
+    "postcss": "^8.4.49",
     "react-email": "3.0.2",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.7.2",
     "@types/bun": "latest"
   },
   "module": "index.ts",
   "type": "module",
   "trustedDependencies": [
     "@tsparticles/engine",
-    "protobufjs"
+    "esbuild",
+    "protobufjs",
+    "sharp"
   ]
 }

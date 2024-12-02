@@ -3,9 +3,11 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   User,
 } from "firebase/auth";
 import { SignInAndSignUp } from "./../Type/Authentication";
+import { auth } from "./firebase.config";
 
 type FirebaseUser = {
   uid: string;
@@ -64,4 +66,9 @@ export const createAccountEmailPassword = async ({
   } catch (error) {
     throw new Error("Error creating account" + " " + error);
   }
+};
+
+export const signOutUser = async () => {
+  const user = await signOut(auth);
+  return user;
 };
