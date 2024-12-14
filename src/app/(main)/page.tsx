@@ -14,7 +14,7 @@ const Home = () => {
         <div className="animate-infinite animate-ease-linear pointer-events-none absolute right-[45%] top-32 size-32 animate-pulse rounded-full bg-fuchsia-500/70 blur-2xl"></div>
 
         {/* effect */}
-        <div className="container relative mx-auto px-4 pt-24">
+        <div className="container relative mx-auto px-4 md:pt-32">
           <ContainerScrollAnimation />
         </div>
       </section>
