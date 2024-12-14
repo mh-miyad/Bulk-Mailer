@@ -43,15 +43,15 @@ const FixNavbar = () => {
   return (
     <header
       className={`fixed  left-0 transition-all ease-linear duration-200 right-0 z-50 max-w-[1440px] mx-auto w-full ${
-        isScrolled ? "max-w-6xl px-10 top-5" : "top-0"
+        isScrolled ? "top-0 bg-slate-50 dark:bg-[#060d1d] " : "top-0"
       }`}
     >
       <nav
         className={cn(
-          "w-full transition-all duration-300 border-2 rounded-full px-10",
+          "w-full transition-all duration-300 border-2 border-transparent px-10",
           isScrolled
-            ? "py-3  bg-slate-50 dark:bg-slate-900 backdrop-blur-lg shadow-sm  border-blue-900/30"
-            : "py-5 bg-transparent border-transparent"
+            ? "py-3  max-w-6xl mx-auto backdrop-blur-lg shadow-sm "
+            : "py-5  border-transparent max-w-full mx-auto "
         )}
       >
         <div className="container mx-auto px-4">

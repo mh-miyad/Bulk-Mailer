@@ -1,5 +1,7 @@
+import ContainerScrollAnimation from "@/components/Home/ContainerScroll";
 import { AnimatedTestimonials } from "@/components/web/animated-testimonials";
-import { testimonials } from "@/lib/Data/DemoData";
+import { AnimatedTooltip } from "@/components/web/animated-tooltip";
+import { people, testimonials } from "@/lib/Data/DemoData";
 import Image from "next/image";
 import img from "../../images/img1.webp";
 const Home = () => {
@@ -25,6 +27,12 @@ const Home = () => {
               With SaaStream, efficiency becomes second nature, allowing you to
               focus on what truly matters in your business journey.
             </p>
+          </div>
+          <div>
+            <div className="flex my-5 items-center justify-center mt-10">
+              <AnimatedTooltip items={people} />
+            </div>
+            <ContainerScrollAnimation />
           </div>
         </div>
         <div className="mx-auto w-full max-w-7xl">
