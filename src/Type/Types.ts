@@ -81,3 +81,10 @@ export interface DashboardActions {
   updateStats: () => void;
   fetchDashboardData: () => Promise<void>;
 }
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  designation: string;
+  src: string;
+};
