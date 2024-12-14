@@ -42,7 +42,7 @@ export default function ContainerScrollAnimation() {
                     repeat: Infinity, // Infinite loop
                     repeatType: "reverse", // Reverse direction for smooth looping
                   }}
-                  className="mx-5 mb-0 mt-7 bg-gradient-to-tr from-green-500 via-sky-400 to-cyan-400 bg-clip-text text-6xl text-transparent md:text-6xl lg:text-8xl 2xl:text-[9rem]"
+                  className="mx-5 mb-0 bg-gradient-to-tr from-green-500 via-sky-400 to-cyan-400 bg-clip-text text-6xl text-transparent md:text-6xl lg:text-8xl 2xl:text-[9rem]"
                   style={{
                     backgroundSize: "200% 200%", // For smooth gradient animation
                   }}
