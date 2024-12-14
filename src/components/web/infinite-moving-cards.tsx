@@ -1,123 +1,83 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import Image from "next/image";
+import Marquee from "react-fast-marquee";
 
-import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+const brands = [
+  {
+    name: "Clientify",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721554218731e1bd7afe2_Frame%2014103.png",
+  },
+  {
+    name: "Fidelity",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721e27837cb92b2fd3dc2_Frame%2014101.png",
+  },
+  {
+    name: "Spendgo",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665722404874ce9e550c083e_Frame%2014105.png",
+  },
+  {
+    name: "Lightspeed",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721b8b5d1af5da2bfe547_Frame%2014097.png",
+  },
+  {
+    name: "User",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/6657224d9af5c5df542fb31b_Frame%2014109.png",
+  },
+  {
+    name: "Inbox Marketer",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721acac5d1a8170cdb7a3_Frame%2014098.png",
+  },
+  {
+    name: "Clientify",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721554218731e1bd7afe2_Frame%2014103.png",
+  },
+  {
+    name: "Fidelity",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721e27837cb92b2fd3dc2_Frame%2014101.png",
+  },
+  {
+    name: "Spendgo",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665722404874ce9e550c083e_Frame%2014105.png",
+  },
+  {
+    name: "Lightspeed",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721b8b5d1af5da2bfe547_Frame%2014097.png",
+  },
+  {
+    name: "User",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/6657224d9af5c5df542fb31b_Frame%2014109.png",
+  },
+  {
+    name: "Inbox Marketer",
+    logo: "https://cdn.prod.website-files.com/64f144bd2210c380b36050cd/665721acac5d1a8170cdb7a3_Frame%2014098.png",
+  },
+];
 
-export const InfiniteMovingCards = ({
-  items,
-  direction = "left",
-  speed = "fast",
-  pauseOnHover = true,
-  className,
-}: {
-  items: {
-    quote: string;
-    name: string;
-    title: string;
-  }[];
-  direction?: "left" | "right";
-  speed?: "fast" | "normal" | "slow";
-  pauseOnHover?: boolean;
-  className?: string;
-}) => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const scrollerRef = React.useRef<HTMLUListElement>(null);
-
-  const [start, setStart] = useState(false);
-  function addAnimation() {
-    if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
-      });
-
-      getDirection();
-      getSpeed();
-      setStart(true);
-    }
-  }
-  const getDirection = () => {
-    if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "forwards"
-        );
-      } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse"
-        );
-      }
-    }
-  };
-  useEffect(() => {
-    addAnimation();
-  }, [addAnimation]);
-  const getSpeed = () => {
-    if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      }
-    }
-  };
+export default function BrandMarquee() {
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        className
-      )}
-    >
-      <ul
-        ref={scrollerRef}
-        className={cn(
-          " flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
-          start && "animate-scroll ",
-          pauseOnHover && "hover:[animation-play-state:paused]"
-        )}
+    <div className="my-10 w-full overflow-hidden backdrop-blur-2xl dark:bg-slate-700">
+      <Marquee
+        delay={4}
+        pauseOnHover={true}
+        loop={10000}
+        gradient={false}
+        play={true}
       >
-        {items.map((item, idx) => (
-          <li
-            className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
-            style={{
-              background:
-                "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
-            }}
-            key={item.name}
+        {brands.map((brand, index) => (
+          <div
+            key={index}
+            className="flex h-auto w-full items-center gap-10 px-4"
           >
-            <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
-              ></div>
-              <span className=" relative z-20 text-sm leading-[1.6] text-gray-100 font-normal">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span className=" text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.name}
-                  </span>
-                  <span className=" text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.title}
-                  </span>
-                </span>
-              </div>
-            </blockquote>
-          </li>
+            <Image
+              src={brand.logo}
+              alt={brand.name}
+              className="size-56 object-contain"
+              width={300}
+              height={100}
+            />
+          </div>
         ))}
-      </ul>
+      </Marquee>
     </div>
   );
-};
+}

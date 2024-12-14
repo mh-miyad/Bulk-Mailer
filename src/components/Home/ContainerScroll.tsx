@@ -28,7 +28,7 @@ export default function ContainerScrollAnimation() {
         titleComponent={
           <>
             <div className="flex flex-col items-center justify-center text-center">
-              <h1 className="text-7xl md:text-6xl lg:text-8xl 2xl:text-9xl font-bold caption-top ">
+              <h1 className="caption-top text-4xl font-bold md:text-6xl lg:text-8xl 2xl:text-9xl">
                 <TypewriterEffectSmooth words={words} />
                 <span>With</span>
                 <motion.span
@@ -42,7 +42,7 @@ export default function ContainerScrollAnimation() {
                     repeat: Infinity, // Infinite loop
                     repeatType: "reverse", // Reverse direction for smooth looping
                   }}
-                  className="text-6xl md:text-6xl lg:text-8xl 2xl:text-[9rem] mx-5 mt-7 mb-0 bg-gradient-to-tr from-green-500 via-sky-400 to-cyan-400 bg-clip-text text-transparent"
+                  className="mx-5 mb-0 mt-7 bg-gradient-to-tr from-green-500 via-sky-400 to-cyan-400 bg-clip-text text-6xl text-transparent md:text-6xl lg:text-8xl 2xl:text-[9rem]"
                   style={{
                     backgroundSize: "200% 200%", // For smooth gradient animation
                   }}
@@ -50,10 +50,10 @@ export default function ContainerScrollAnimation() {
                   <span className={`${abeezee.className}`}>DROPEX</span>
                 </motion.span>
               </h1>
-              <div className="flex my-5 items-center justify-center mt-10 ">
+              <div className="my-5 mt-10 flex items-center justify-center">
                 <AnimatedTooltip items={people} />
               </div>
-              <p className="mt-6 text-lg md:text-xl lg:text-2xl  max-w-2xl">
+              <p className="mt-6 max-w-2xl text-lg md:text-xl lg:text-2xl">
                 Save time and cut costs with Dropex! Integrate our drag-and-drop
                 builder into your SaaS, CRM, or ESP to create and send stunning
                 email templates effortlessly
@@ -67,7 +67,7 @@ export default function ContainerScrollAnimation() {
           alt="hero"
           height={1020}
           width={1400}
-          className="mx-auto rounded-2xl object-cover h-full object-left-top"
+          className="mx-auto h-full rounded-2xl object-contain object-left-top"
           draggable={false}
         />
       </ContainerScroll>

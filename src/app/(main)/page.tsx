@@ -1,21 +1,25 @@
 import ContainerScrollAnimation from "@/components/Home/ContainerScroll";
 import { AnimatedTestimonials } from "@/components/web/animated-testimonials";
+import BrandMarquee from "@/components/web/infinite-moving-cards";
 import { testimonials } from "@/lib/Data/DemoData";
 const Home = () => {
   return (
     <>
-      <section className="relative overflow-hidden h-auto backdrop-blur-2xl dark:bg-slate-900/30 ">
+      <section className="relative h-auto overflow-hidden backdrop-blur-2xl dark:bg-slate-900/30">
         {/* effect */}
 
-        <div className="size-72  pointer-events-none bg-sky-500/50 rounded-s-full blur-2xl absolute top-[40%] left-[30%] "></div>
-        <div className="size-72 pointer-events-none  bg-green-500/40 rounded-e-full blur-2xl absolute top-1/2 right-[20%] "></div>
-        <div className="size-52 animate-pulse animate-infinite animate-ease-linear  pointer-events-none bg-blue-500/70 rounded-full blur-2xl absolute top-32  left-1/4 "></div>
-        <div className="size-32 animate-pulse animate-infinite animate-ease-linear pointer-events-none  bg-fuchsia-500/70 rounded-full blur-2xl absolute top-32 right-[45%] "></div>
+        <div className="pointer-events-none absolute left-[30%] top-[40%] size-72 rounded-s-full bg-sky-500/50 blur-2xl"></div>
+        <div className="pointer-events-none absolute right-[20%] top-1/2 size-72 rounded-e-full bg-green-500/40 blur-2xl"></div>
+        <div className="animate-infinite animate-ease-linear pointer-events-none absolute left-1/4 top-32 size-52 animate-pulse rounded-full bg-blue-500/70 blur-2xl"></div>
+        <div className="animate-infinite animate-ease-linear pointer-events-none absolute right-[45%] top-32 size-32 animate-pulse rounded-full bg-fuchsia-500/70 blur-2xl"></div>
 
         {/* effect */}
-        <div className="container mx-auto px-4  pt-32 relative">
+        <div className="container relative mx-auto px-4 pt-32">
           <ContainerScrollAnimation />
         </div>
+      </section>
+      <section>
+        <BrandMarquee />
       </section>
       <section>
         <AnimatedTestimonials autoplay={true} testimonials={testimonials} />
