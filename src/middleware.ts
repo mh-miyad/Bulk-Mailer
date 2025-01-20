@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  const userCookie = req.cookies.get("m_user_data"); // Get the user cookie
+  const userCookie = req.cookies.get("m_user_data");
   const { pathname } = req.nextUrl;
 
   // Define routes that require authentication

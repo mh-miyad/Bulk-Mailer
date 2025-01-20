@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cleanHtmlTemplate } from "@/lib/utils";
 import useStore from "@/Store/Store";
 import axios from "axios";
-import { Eye } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -38,36 +39,6 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
   }, [params, htmlArray]);
   const [loading, setLoading] = useState(false);
 
-  const cleanHtmlTemplate = (htmlContent: string | null): string => {
-    // Handle case when htmlContent is null
-    if (!htmlContent) {
-      return "";
-    }
-    const removePatterns = [
-      /<!--\[if[^]*?\[endif\]-->/gi,
-      /<!DOCTYPE[^>]*>/gi,
-      /<title>[^]*?<\/title>/gi,
-      /<meta[^>]*>/gi,
-      /<html[^>]*>/gi,
-      /<\/html>/gi,
-    ];
-
-    // Apply each regex pattern to the content
-    let cleanedContent = htmlContent;
-    removePatterns.forEach((pattern) => {
-      cleanedContent = cleanedContent.replace(pattern, "");
-    });
-    cleanedContent = cleanedContent
-      .replace(/\s{2,}/g, " ") // Replace multiple spaces with a single space
-      .replace(/>[\r\n\s]*</g, "><") // Remove spaces and newlines between tags
-      .replace(/<!--.*?-->/g, "") // Remove HTML comments
-      .replace(/\s*=\s*/g, "=") // Remove spaces around '=' in attributes
-      .replace(/"\s+/g, '"') // Remove trailing spaces after attribute values
-      .replace(/\s+"/g, '"') // Remove leading spaces before attribute values
-      .trim(); // Trim any remaining whitespace
-    return cleanedContent;
-  };
-
   const [sendMailData, setSendMailData] = useState({
     to: "miyad@royex.net",
     subject: "Eyaana Campaign Dubai",
@@ -83,7 +54,6 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       subject: sendMailData.subject,
       email: sendMailData.email,
     };
-    console.log(cleanHtmlTemplate(htmlContent));
     setLoading(true);
     const respose = await axios.post(
       `${
@@ -105,12 +75,26 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       setOpen(false);
     }
   };
+  const fileName = "email.html";
+  const htmlContentDownload = `${cleanHtmlTemplate(htmlContent)}`;
+  const downloadHtmlFile = () => {
+    const blob = new Blob([htmlContentDownload], { type: "text/html" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName.endsWith(".html") ? fileName : `${fileName}.html`;
+    link.click();
+    URL.revokeObjectURL(link.href); // Clean up URL object
+  };
   return (
     <div>
-      <div className="mb-10 mt-10">
+      <div className="mb-10 mt-10 flex items-center justify-between gap-6">
         <Button className="gap-2" onClick={() => setOpen(true)}>
           <Eye className="h-4 w-4" />
           Send Test Email
+        </Button>
+        <Button className="gap-2" onClick={downloadHtmlFile}>
+          <Download className="h-4 w-4" />
+          Download HTML
         </Button>
       </div>
       {htmlContent ? (
