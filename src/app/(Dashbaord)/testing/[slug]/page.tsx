@@ -83,7 +83,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       subject: sendMailData.subject,
       email: sendMailData.email,
     };
-
+    console.log(cleanHtmlTemplate(htmlContent));
     setLoading(true);
     const respose = await axios.post(
       `${
@@ -94,7 +94,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
       {
         data,
         htmlOfEmail: cleanHtmlTemplate(htmlContent),
-      }
+      },
     );
     if (respose.data) {
       toast.success("Email sent successfully", {
@@ -107,7 +107,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
   };
   return (
     <div>
-      <div className="mt-10 mb-10">
+      <div className="mb-10 mt-10">
         <Button className="gap-2" onClick={() => setOpen(true)}>
           <Eye className="h-4 w-4" />
           Send Test Email
@@ -117,7 +117,7 @@ const TestingPageByID: React.FC<TestingPageProps> = ({ params }) => {
         <iframe
           srcDoc={htmlContent}
           title="Email Preview"
-          className="w-full h-full min-h-screen bg-transparent border rounded-md shadow-lg"
+          className="h-full min-h-screen w-full rounded-md border bg-transparent shadow-lg"
         ></iframe>
       ) : (
         <p>Template not found.</p>
