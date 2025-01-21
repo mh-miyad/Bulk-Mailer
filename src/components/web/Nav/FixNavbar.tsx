@@ -1,4 +1,5 @@
 "use client";
+import { useFirebase } from "@/Authentication/useFirebase";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -30,6 +31,9 @@ const navLink = [
 ];
 const FixNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const fireBase = useFirebase();
+  const user = fireBase?.auth.currentUser?.email;
+
   const { setTheme } = useTheme();
   useEffect(() => {
     const handleScroll = () => {
@@ -118,11 +122,21 @@ const FixNavbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link href={"/login"}>
-                <Button className="rounded-full px-6 font-bold uppercase">
-                  Login
-                </Button>
-              </Link>
+              <div>
+                {user ? (
+                  <Link href={"/dashboard"}>
+                    <Button className="rounded-full px-6 font-bold uppercase">
+                      Dashboard
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href={"/login"}>
+                    <Button className="rounded-full px-6 font-bold uppercase">
+                      Login
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
             {/* Login */}
           </div>
