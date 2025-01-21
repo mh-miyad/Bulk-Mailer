@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useStore from "@/Store/Store";
 import { CopyIcon } from "lucide-react";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -88,7 +89,13 @@ const MainEmailBuilder = () => {
             Show Code
           </Button>
         </div>
-        <span className="absolute bottom-0 right-0 h-10 w-full max-w-[350px] dark:bg-slate-950"></span>
+        <Link
+          href={`https://my-portfolio-v3-teal.vercel.app`}
+          target="_blank"
+          className="absolute bottom-0 right-0 flex h-12 w-full items-center justify-center bg-white font-bold text-blue-500 underline xl:max-w-[350px] 2xl:max-w-[450px]"
+        >
+          By MH Miyad
+        </Link>
         <EmailEditor ref={emailEditorRef} onReady={onReady} />
       </div>
 

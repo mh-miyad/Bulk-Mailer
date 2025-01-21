@@ -11,7 +11,6 @@ export async function middleware(req: NextRequest) {
     "/profile",
     "/settings",
     "/EmailBuilder",
-    "/createCampaign",
     "/preview",
     "/testing",
     "/Template",

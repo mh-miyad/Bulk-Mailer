@@ -26,7 +26,6 @@ import {
   FaHome,
   FaUserFriends,
 } from "react-icons/fa"; // React Icons
-import { MdOutlineCampaign } from "react-icons/md";
 import { SidebarOptInForm } from "./sidebar-comp-opt";
 import { SideBarUser } from "./sidebar-user";
 
@@ -50,11 +49,6 @@ const data = {
           url: "/contact-list",
           icon: FaUserFriends,
         },
-        {
-          title: "Campaign ",
-          url: "/createCampaign",
-          icon: MdOutlineCampaign,
-        },
       ],
     },
     {
@@ -63,14 +57,14 @@ const data = {
       icon: FaEnvelope,
       items: [
         {
-          title: "Templates",
-          url: "/Template",
-          icon: FileText,
-        },
-        {
           title: "Email Builder",
           url: "/EmailBuilder",
           icon: FaDraftingCompass,
+        },
+        {
+          title: "Templates",
+          url: "/Template",
+          icon: FileText,
         },
         {
           title: "Testing",
@@ -133,7 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <item.icon className="mr-2 h-3 w-3" />
                 {item.title}
               </SidebarGroupLabel>
-              <SidebarGroupContent className="pl-4 my-3">
+              <SidebarGroupContent className="my-3 pl-4">
                 <SidebarMenu>
                   {item.items.map((item) => (
                     <Link
