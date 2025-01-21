@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
+import { Auth, getAuth, onAuthStateChanged } from "firebase/auth";
 import { Firestore, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -15,12 +15,13 @@ const firebaseConfig = {
 };
 
 interface FirebaseContext {
-  app: any;
+  app: FirebaseApp;
   db: Firestore;
   auth: Auth;
+  userEmail: string | null;
 }
 
-export const useFirebase = (): FirebaseContext => {
+export const useFirebase = (): FirebaseContext | null => {
   const [firebaseContext, setFirebaseContext] =
     useState<FirebaseContext | null>(null);
 
@@ -29,12 +30,18 @@ export const useFirebase = (): FirebaseContext => {
     const db: Firestore = getFirestore(app);
     const auth: Auth = getAuth(app);
 
-    setFirebaseContext({ app, db, auth });
-  }, []);
+    // Listen for authentication changes and update userEmail
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setFirebaseContext({
+        app,
+        db,
+        auth,
+        userEmail: user?.email || null,
+      });
+    });
 
-  if (!firebaseContext) {
-    throw new Error("Firebase not initialized");
-  }
+    return unsubscribe; // Cleanup on unmount
+  }, []);
 
   return firebaseContext;
 };

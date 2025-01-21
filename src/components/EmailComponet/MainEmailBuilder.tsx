@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { useFirebase } from "@/Authentication/useFirebase";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useStore from "@/Store/Store";
+import axios from "axios";
 import { CopyIcon } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -28,8 +30,45 @@ const MainEmailBuilder = () => {
   const [htmlCode, setHtmlCode] = useState("");
   const [openModalCode, setOpenModalCode] = useState(false);
   const [templateName, setTemplateName] = useState<string>("");
-  const exportHtml = () => {
-    const unlayer = emailEditorRef.current?.editor;
+  const [usageCount, setUsageCount] = useState(0);
+  const [openUpgradeModal, setOpenUpgradeModal] = useState(false);
+  const firebaseContext = useFirebase();
+  const userMail = firebaseContext?.userEmail;
+  const updateExportCount = async (): Promise<boolean> => {
+    if (!userMail) {
+      console.error("User not logged in.");
+      return false;
+    }
+
+    try {
+      const response = await axios.post("/api/userMail", {
+        email: userMail,
+      });
+
+      // Check if there is an error in the response
+      if (response.data.error) {
+        // If error exists, handle the upgrade modal and return false
+        if (response.data.error === "Export limit reached") {
+          setOpenUpgradeModal(true);
+        }
+        console.error(response.data.error);
+        return false;
+      }
+
+      // If exportCount is returned, log it and allow the action
+      console.log(`Export count: ${response.data.exportCount}`);
+      return true;
+    } catch (error) {
+      console.error("Failed to update export count:", error);
+      return false;
+    }
+  };
+
+  const exportHtml = async () => {
+    const canExport = await updateExportCount();
+    if (!canExport) return;
+
+    const unlayer = await emailEditorRef.current?.editor;
 
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
@@ -47,8 +86,12 @@ const MainEmailBuilder = () => {
       setOpenModal(false);
     });
   };
-  const showCode = () => {
-    const unlayer = emailEditorRef.current?.editor;
+
+  const showCode = async () => {
+    const canShowCode = await updateExportCount();
+    if (!canShowCode) return;
+
+    const unlayer = await emailEditorRef.current?.editor;
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
       setOpenModalCode(true);
@@ -56,7 +99,9 @@ const MainEmailBuilder = () => {
     });
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = async () => {
+    const canShowCode = await updateExportCount();
+    if (!canShowCode) return;
     navigator.clipboard.writeText(htmlCode);
     toast.success("HTML code copied to clipboard");
   };
@@ -74,6 +119,7 @@ const MainEmailBuilder = () => {
   const onReady: EmailEditorProps["onReady"] = (unlayer) => {
     // console.log(unlayer);
   };
+
   return (
     <div className="relative">
       <div>
@@ -102,7 +148,7 @@ const MainEmailBuilder = () => {
       <Dialog open={openModal} onOpenChange={closeModal}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Export Your Email Template </DialogTitle>
+            <DialogTitle>Export Your Email Template</DialogTitle>
             <DialogDescription>
               Export your email template as a HTML and JSON file. This will
               allow you to share your template with others or use it in your
@@ -115,8 +161,8 @@ const MainEmailBuilder = () => {
             </Label>
             <Input
               id="name"
-              defaultValue="Template Name "
-              placeholder="Write your template name "
+              defaultValue="Template Name"
+              placeholder="Write your template name"
               className="col-span-3"
               onChange={(e) => setTemplateName(e.target.value)}
             />
@@ -155,6 +201,30 @@ const MainEmailBuilder = () => {
               {htmlCode}
             </SyntaxHighlighter>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={openUpgradeModal}
+        onOpenChange={() => setOpenUpgradeModal(false)}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Upgrade Required</DialogTitle>
+            <DialogDescription>
+              You have reached the limit of 3 free uses of the template builder.
+              Please visit our pricing page to upgrade your plan and continue
+              using this feature.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="button"
+              onClick={() => (window.location.href = "/pricing")}
+            >
+              Go to Pricing Page
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
