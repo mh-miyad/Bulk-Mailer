@@ -142,7 +142,11 @@ const MainEmailBuilder = () => {
         >
           By MH Miyad
         </Link>
-        <EmailEditor ref={emailEditorRef} onReady={onReady} />
+        <EmailEditor
+          ref={emailEditorRef}
+          onReady={onReady}
+          style={{ height: "100vh", width: "100%" }}
+        />
       </div>
 
       <Dialog open={openModal} onOpenChange={closeModal}>
