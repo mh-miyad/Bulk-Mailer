@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cleanHtmlTemplate } from "@/lib/utils";
 import useStore from "@/Store/Store";
-import axios from "axios";
 import { CopyIcon } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -34,39 +34,39 @@ const MainEmailBuilder = () => {
   const [openUpgradeModal, setOpenUpgradeModal] = useState(false);
   const firebaseContext = useFirebase();
   const userMail = firebaseContext?.userEmail;
-  const updateExportCount = async (): Promise<boolean> => {
-    if (!userMail) {
-      console.error("User not logged in.");
-      return false;
-    }
+  // const updateExportCount = async (): Promise<boolean> => {
+  //   if (!userMail) {
+  //     console.error("User not logged in.");
+  //     return false;
+  //   }
 
-    try {
-      const response = await axios.post("/api/userMail", {
-        email: userMail,
-      });
+  //   try {
+  //     const response = await axios.post("/api/userMail", {
+  //       email: userMail,
+  //     });
 
-      // Check if there is an error in the response
-      if (response.data.error) {
-        // If error exists, handle the upgrade modal and return false
-        if (response.data.error === "Export limit reached") {
-          setOpenUpgradeModal(true);
-        }
-        console.error(response.data.error);
-        return false;
-      }
+  //     // Check if there is an error in the response
+  //     if (response.data.error) {
+  //       // If error exists, handle the upgrade modal and return false
+  //       if (response.data.error === "Export limit reached") {
+  //         setOpenUpgradeModal(true);
+  //       }
+  //       console.error(response.data.error);
+  //       return false;
+  //     }
 
-      // If exportCount is returned, log it and allow the action
-      console.log(`Export count: ${response.data.exportCount}`);
-      return true;
-    } catch (error) {
-      console.error("Failed to update export count:", error);
-      return false;
-    }
-  };
+  //     // If exportCount is returned, log it and allow the action
+  //     console.log(`Export count: ${response.data.exportCount}`);
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Failed to update export count:", error);
+  //     return false;
+  //   }
+  // };
 
   const exportHtml = async () => {
-    const canExport = await updateExportCount();
-    if (!canExport) return;
+    // const canExport = await updateExportCount();
+    // if (!canExport) return;
 
     const unlayer = await emailEditorRef.current?.editor;
 
@@ -88,20 +88,16 @@ const MainEmailBuilder = () => {
   };
 
   const showCode = async () => {
-    const canShowCode = await updateExportCount();
-    if (!canShowCode) return;
-
     const unlayer = await emailEditorRef.current?.editor;
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
       setOpenModalCode(true);
-      setHtmlCode(html);
+      const cleanedHtml = cleanHtmlTemplate(html);
+      setHtmlCode(cleanedHtml);
     });
   };
 
   const copyToClipboard = async () => {
-    const canShowCode = await updateExportCount();
-    if (!canShowCode) return;
     navigator.clipboard.writeText(htmlCode);
     toast.success("HTML code copied to clipboard");
   };
