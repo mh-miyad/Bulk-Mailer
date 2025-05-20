@@ -55,7 +55,7 @@ const brands = [
 
 export default function BrandMarquee() {
   return (
-    <div className="my-10 w-full overflow-hidden backdrop-blur-2xl dark:bg-slate-700">
+    <div className="mb-10 w-full overflow-hidden backdrop-blur-2xl">
       <Marquee
         delay={4}
         pauseOnHover={true}

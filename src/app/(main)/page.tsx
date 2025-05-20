@@ -1,7 +1,8 @@
 import ContainerScrollAnimation from "@/components/Home/ContainerScroll";
-import { AnimatedTestimonials } from "@/components/web/animated-testimonials";
+import FAQsFour from "@/components/web/FAQ";
 import BrandMarquee from "@/components/web/infinite-moving-cards";
-import { testimonials } from "@/lib/Data/DemoData";
+import Pricing from "@/components/web/Price";
+import WallOfLoveSection from "@/components/web/TestimonialNew";
 const Home = () => {
   return (
     <>
@@ -21,9 +22,11 @@ const Home = () => {
       <section>
         <BrandMarquee />
       </section>
+      <Pricing />
       <section>
-        <AnimatedTestimonials autoplay={true} testimonials={testimonials} />
+        <WallOfLoveSection />
       </section>
+      <FAQsFour />
     </>
   );
 };

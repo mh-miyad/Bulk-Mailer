@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
 
-const dbURI: string = `${process.env.MONGODB_URI}`;
-
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbURI, {
+    await mongoose.connect(process.env.MONGODB_URI!, {
       dbName: "DraftMailX",
     });
     console.log("MongoDB connected successfully");

@@ -12,23 +12,7 @@ import { CircuitBoard, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-const navLink = [
-  {
-    label: "Home",
-    href: "/",
-    active: true,
-  },
-  {
-    label: "About",
-    href: "/about",
-    active: false,
-  },
-  {
-    label: "Price",
-    href: "/price",
-    active: false,
-  },
-];
+
 const FixNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const fireBase = useFirebase();
@@ -68,34 +52,12 @@ const FixNavbar = () => {
                   strokeWidth={1.5}
                 />
                 <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-xl font-bold uppercase text-transparent">
-                  <span className="">Draftex</span>
+                  <span className="">Dropex</span>
                 </span>
               </div>
             </Link>
             {/* logo */}
-            <div className="hidden items-center space-x-8 md:flex">
-              {navLink.map((link, index) => {
-                return (
-                  <Link
-                    key={index + 1}
-                    href={link.href}
-                    className={cn(
-                      "relative px-1 py-2 font-medium transition-colors duration-200",
-                      "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full",
-                      "after:origin-left after:scale-x-0 after:bg-primary after:transition-transform",
-                      "hover:text-primary hover:after:scale-x-100",
-                      `${
-                        link.active
-                          ? "text-primary after:scale-x-100"
-                          : "text-muted-foreground"
-                      }`,
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+
             {/* Login */}
             <div className="flex gap-5">
               <DropdownMenu>

@@ -1,5 +1,11 @@
+import FooterComp from "../web/Footer";
+
 const Footer = () => {
-  return <div>Footer</div>;
+  return (
+    <>
+      <FooterComp />
+    </>
+  );
 };
 
 export default Footer;
