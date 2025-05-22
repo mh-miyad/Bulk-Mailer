@@ -1,0 +1,6 @@
+id,name,email,status,dateAdded
+1,John Doe,john@example.com,subscribed,2023-01-01T10:00:00.000Z
+2,Jane Smith,jane@example.com,subscribed,2023-01-02T11:30:00.000Z
+3,Bob Johnson,bob@example.com,unsubscribed,2023-01-03T09:15:00.000Z
+4,Alice Williams,alice@example.com,subscribed,2023-01-04T14:45:00.000Z
+5,Charlie Brown,charlie@example.com,subscribed,2023-01-05T16:20:00.000Z

@@ -38,6 +38,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.8.1",
     "@types/nodemailer": "^6.4.17",
+    "@types/papaparse": "^5.3.16",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@types/react-syntax-highlighter": "^15.5.13",
