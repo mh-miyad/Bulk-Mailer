@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cleanHtmlTemplate } from "@/lib/utils";
 import useStore from "@/Store/Store";
+import axios from "axios";
 import { CopyIcon } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -24,6 +25,8 @@ import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
 
 const MainEmailBuilder = () => {
+  const fireBase = useFirebase();
+  const user = fireBase?.auth.currentUser?.email;
   const emailEditorRef = useRef<EditorRef>(null);
   const { addHtml } = useStore();
   const [openModal, setOpenModal] = useState(false);
@@ -70,7 +73,7 @@ const MainEmailBuilder = () => {
 
     const unlayer = await emailEditorRef.current?.editor;
 
-    unlayer?.exportHtml((data) => {
+    unlayer?.exportHtml(async (data) => {
       const { design, html } = data;
 
       const template = {
@@ -80,6 +83,26 @@ const MainEmailBuilder = () => {
         html,
         json: design,
       };
+
+      const result = await axios.post(
+        `${
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000"
+            : `${process.env.NEXT_PRODUCTION_URL}`
+        }/api/uploadmail`,
+        {
+          templateName,
+          createdDate: new Date().toISOString(),
+          htmlOfEmail: `${html}`,
+          userEmail: user,
+          json: `${design}`,
+        },
+      );
+      if (result.data) {
+        console.log(result.data);
+        toast.success("Template added successfully");
+        setOpenModal(false);
+      }
 
       addHtml(template);
       toast.success("Template added successfully");

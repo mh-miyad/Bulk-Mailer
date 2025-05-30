@@ -59,8 +59,8 @@ const LoginPage = () => {
         position: "top-center",
         duration: 5000,
       });
-      setLoading(false);
       router.push("/dashboard");
+      setLoading(false);
     } else {
       toast.error("Something went wrong");
     }

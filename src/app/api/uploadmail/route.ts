@@ -4,11 +4,15 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   await connectDB();
-  const { templateName, htmlOfEmail } = await request.json();
+  const { templateName, createdDate, htmlOfEmail, userEmail, json } =
+    await request.json();
   try {
     const result = await EmailUpload.create({
+      userEmail,
+      createdDate,
       templateName,
       htmlOfEmail,
+      json,
     });
 
     return NextResponse.json({

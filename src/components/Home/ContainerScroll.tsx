@@ -23,7 +23,7 @@ export default function ContainerScrollAnimation() {
   ];
 
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className="flex flex-col overflow-hidden lg:pt-32 2xl:pt-40">
       <ContainerScroll
         titleComponent={
           <>
