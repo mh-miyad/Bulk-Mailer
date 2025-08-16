@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 const MainEmailBuilder = () => {
   const fireBase = useFirebase();
   const user = fireBase?.auth.currentUser?.email;
+  const [loading, setLoading] = useState(true);
   const emailEditorRef = useRef<EditorRef>(null);
   const { addHtml } = useStore();
   const [openModal, setOpenModal] = useState(false);
@@ -136,40 +137,51 @@ const MainEmailBuilder = () => {
     setOpenModalCode(false);
   };
   const onReady: EmailEditorProps["onReady"] = (unlayer) => {
-    // console.log(unlayer);
+    setLoading(false);
   };
 
   return (
     <div className="relative">
-      <div>
-        <div className="flex items-center gap-6">
-          <Button
-            onClick={handleOpenModal}
-            variant={"outline"}
-            className="mb-5"
-          >
-            Export HTML
-          </Button>
-          <Button onClick={showCode} variant={"default"} className="mb-5">
-            Show Code
-          </Button>
-        </div>
-        <Link
-          href={`https://my-portfolio-v3-teal.vercel.app`}
-          target="_blank"
-          className="absolute bottom-0 right-0 flex h-12 w-full items-center justify-center bg-white font-bold text-blue-500 underline xl:max-w-[350px] 2xl:max-w-[450px]"
-        >
-          By MH Miyad
-        </Link>
-        <EmailEditor
-          ref={emailEditorRef}
-          onReady={onReady}
-          style={{ height: "100vh", width: "100%" }}
-        />
-      </div>
+      {loading && (
+        <>
+          <div className="absolute flex h-screen w-full items-center justify-center rounded-sm bg-slate-500/10 p-4 backdrop-blur-md">
+            Loading
+          </div>
+        </>
+      )}
+      {
+        <>
+          <div>
+            <div className="flex items-center gap-6">
+              <Button
+                onClick={handleOpenModal}
+                variant={"outline"}
+                className="mb-5"
+              >
+                Export HTML
+              </Button>
+              <Button onClick={showCode} variant={"default"} className="mb-5">
+                Show Code
+              </Button>
+            </div>
+            <Link
+              href={`https://my-portfolio-v3-teal.vercel.app`}
+              target="_blank"
+              className="absolute bottom-0 right-0 flex h-12 w-full items-center justify-center bg-white font-bold text-blue-500 underline xl:max-w-[350px] 2xl:max-w-[450px]"
+            >
+              By MH Miyad
+            </Link>
+            <EmailEditor
+              ref={emailEditorRef}
+              onReady={onReady}
+              style={{ height: "100vh", width: "100%" }}
+            />
+          </div>
+        </>
+      }
 
       <Dialog open={openModal} onOpenChange={closeModal}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="max-h-[calc(100vh-350px)] max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Export Your Email Template</DialogTitle>
             <DialogDescription>
@@ -198,27 +210,29 @@ const MainEmailBuilder = () => {
         </DialogContent>
       </Dialog>
       <Dialog open={openModalCode} onOpenChange={closeModalCode}>
-        <DialogContent className="h-screen w-full max-w-4xl overflow-hidden">
-          <Button size={"icon"} variant={"outline"} onClick={copyToClipboard}>
+        <DialogContent
+          className="max-h-[calc(100vh-150px)] w-full max-w-2xl overflow-y-auto" // allow vertical scroll
+        >
+          <Button size="icon" variant="outline" onClick={copyToClipboard}>
             <CopyIcon />
           </Button>
-          <div className="w-full max-w-4xl overflow-hidden">
+
+          <div className="w-full max-w-2xl">
             <SyntaxHighlighter
               language="html"
               style={atomDark}
-              wrapLongLines={true}
+              wrapLongLines={true} // wrap text
               customStyle={{
                 width: "100%",
-                height: "100%",
                 padding: "20px",
                 maxWidth: "100%",
                 borderRadius: "5px",
-                overflowY: "auto",
-                overflowX: "auto",
                 backgroundColor: "var(--surface-0)",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
-                whiteSpace: "pre-wrap",
-                wordWrap: "break-word",
+                boxShadow: "0px 2px 4px rgba(0,0,0,0.05)",
+                whiteSpace: "pre-wrap", // wrap to next line
+                wordBreak: "break-word", // break long strings if needed
+                overflowY: "auto", // scroll vertically if too tall
+                overflowX: "hidden", // no horizontal scroll
               }}
             >
               {htmlCode}
