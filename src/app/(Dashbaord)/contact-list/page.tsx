@@ -1,6 +1,7 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 import {
   Table,
   TableBody,
@@ -19,13 +21,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Trash, Upload } from 'lucide-react';
-import Papa from 'papaparse';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import axios, { AxiosError } from 'axios';
-import { Progress } from '@/components/ui/progress';
+} from "@/components/ui/table";
+import axios, { AxiosError } from "axios";
+import { Trash, Upload } from "lucide-react";
+import Papa from "papaparse";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface Contact {
   _id: string;
@@ -45,7 +46,7 @@ const ContactList = () => {
 
   const getContacts = async () => {
     try {
-      const response = await axios.get('/api/contacts');
+      const response = await axios.get("/api/contacts");
       const data = response.data as Contact[];
       setContacts(data);
 
@@ -53,7 +54,11 @@ const ContactList = () => {
         // Dynamically set headers from the first contact's properties
         const firstContactProperties = Object.keys(data[0].properties || {});
         // We'll always have email, so add it first.
-        const dynamicHeaders = ['email', ...firstContactProperties, 'dateAdded'];
+        const dynamicHeaders = [
+          "email",
+          ...firstContactProperties,
+          "dateAdded",
+        ];
         setHeaders(dynamicHeaders);
       }
     } catch (error) {
@@ -89,7 +94,7 @@ const ContactList = () => {
 
   const handleFileUpload = () => {
     if (!csvFile) {
-      toast.error('Please select a file to upload.');
+      toast.error("Please select a file to upload.");
       return;
     }
 
@@ -97,9 +102,10 @@ const ContactList = () => {
       header: true,
       skipEmptyLines: true,
       complete: async (results) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const parsedData = results.data as any[];
         if (parsedData.length === 0) {
-          toast.error('CSV file is empty or invalid.');
+          toast.error("CSV file is empty or invalid.");
           return;
         }
 
@@ -121,18 +127,20 @@ const ContactList = () => {
 
         for (let i = 0; i < chunks.length; i++) {
           try {
-            await axios.post('/api/upload-contacts', chunks[i]);
+            await axios.post("/api/upload-contacts", chunks[i]);
             setUploadProgress(i + 1);
           } catch (error) {
             const axiosError = error as AxiosError;
-            toast.error(`Error uploading chunk ${i + 1}: ${axiosError.message}`);
+            toast.error(
+              `Error uploading chunk ${i + 1}: ${axiosError.message}`,
+            );
             setIsUploading(false);
             return; // Stop upload on error
           }
         }
 
         setIsUploading(false);
-        toast.success('All contacts uploaded successfully!');
+        toast.success("All contacts uploaded successfully!");
         getContacts(); // Refresh the list
       },
     });
@@ -153,7 +161,13 @@ const ContactList = () => {
       {isUploading && (
         <div className="mb-4">
           <Label>Uploading Contacts...</Label>
-          <Progress value={(uploadProgress / totalChunks) * 100} className="w-full" />
+          <input
+            type="progress"
+            min="0"
+            max="100"
+            value={(uploadProgress / totalChunks) * 100}
+            className="w-full"
+          />
           <p className="text-sm text-muted-foreground">
             Uploaded {uploadProgress} of {totalChunks} chunks.
           </p>
@@ -177,11 +191,11 @@ const ContactList = () => {
                   <TableRow key={contact._id}>
                     {headers.map((header) => (
                       <TableCell key={header} className="font-medium">
-                        {header === 'email'
+                        {header === "email"
                           ? contact.email
-                          : header === 'dateAdded'
-                          ? new Date(contact.dateAdded).toLocaleDateString()
-                          : contact.properties[header]}
+                          : header === "dateAdded"
+                            ? new Date(contact.dateAdded).toLocaleDateString()
+                            : contact.properties.get(header)}
                       </TableCell>
                     ))}
                     <TableCell className="text-right font-medium">
@@ -204,7 +218,9 @@ const ContactList = () => {
                       <span>Total</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">{contacts.length}</TableCell>
+                  <TableCell className="text-right">
+                    {contacts.length}
+                  </TableCell>
                 </TableRow>
               </TableFooter>
             </Table>
@@ -217,7 +233,7 @@ const ContactList = () => {
           <DialogHeader>
             <DialogTitle>Upload CSV</DialogTitle>
             <DialogDescription>
-              Select a CSV file with contacts. The 'email' column is required.
+              Select a CSV file with contacts. The{"email"} column is required.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -235,8 +251,12 @@ const ContactList = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleFileUpload} disabled={isUploading}>
-              {isUploading ? 'Uploading...' : 'Upload'}
+            <Button
+              type="submit"
+              onClick={handleFileUpload}
+              disabled={isUploading}
+            >
+              {isUploading ? "Uploading..." : "Upload"}
             </Button>
           </DialogFooter>
         </DialogContent>
