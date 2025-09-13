@@ -30,8 +30,10 @@ const FixNavbar = () => {
   }, []);
   return (
     <header
-      className={`fixed left-0 right-0 z-50 mx-auto w-full max-w-[1440px] transition-all duration-200 ease-linear ${
-        isScrolled ? "top-0 bg-slate-50 dark:bg-[#060d1d]" : "top-0"
+      className={`fixed left-0 right-0 z-50 transition-all duration-200 ease-linear ${
+        isScrolled
+          ? "top-0 bg-slate-50/10 backdrop-blur-md dark:bg-[#060d1d]/5"
+          : "top-0"
       }`}
     >
       <nav

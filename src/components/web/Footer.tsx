@@ -55,7 +55,7 @@ const footerLinks = [
 export default function FooterComp() {
   return (
     <footer className="pt-20">
-      <div className="mx-auto max-w-[1520px] space-y-16">
+      <div className="mx-auto max-w-[1280px] space-y-16">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-8">
           <Link href={"/"}>
             <div className="flex items-center space-x-2 transition-opacity hover:opacity-80">
@@ -189,7 +189,7 @@ export default function FooterComp() {
             </form>
           </div>
         </div>
-        <div className="mt-16 flex items-center justify-between rounded-md bg-muted p-4 px-6 py-3">
+        <div className="mt-16 flex items-center justify-between rounded-md p-4 px-6 py-3">
           <span className="text-title">
             &copy; Mioxdhropic - {new Date().getFullYear()}
           </span>
